@@ -9,5 +9,10 @@ module.exports = {
     testEnvironment: 'node',
     preset: 'ts-jest',
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.{ts,js}'],
+    collectCoverageFrom: [
+        'src/api/**/*.controller*.{ts,js}',
+        'src/api/**/*.resolver*.{ts,js}',
+        'src/api/**/schemaDirectives/*.{ts,js}',
+        '!src/api/**/schemaDirectives/index.{ts,js}',
+    ],
 }
