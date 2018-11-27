@@ -1,0 +1,29 @@
+import { gql } from 'apollo-server-express'
+
+const userMutation = gql`
+    scalar Upload
+
+    extend type Mutation {
+        signUp(username: String!, email: String!, password: String!): Token!
+        signIn(username: String!, password: String!): Token!
+        deleteUser(id: ID!): Boolean!
+            @hasPermission(requiredPermission: deleteUser)
+        createUser(
+            username: String!
+            email: String!
+            role: ID!
+            password: String!
+            img: Upload
+        ): User! @hasPermission(requiredPermission: createUser)
+        updateUser(
+            id: ID!
+            username: String
+            password: String
+            email: String
+            role: ID
+            img: Upload
+        ): User @hasPermission(requiredPermission: updateUser)
+    }
+`
+
+export { userMutation }
