@@ -9,6 +9,8 @@ import {
     dropCategories,
     createProducts,
     dropProducts,
+    createTopics,
+    dropTopics,
 } from './script'
 
 const dbConfig = async drop => {
@@ -17,6 +19,7 @@ const dbConfig = async drop => {
         await dropRoles()
         await dropPermissions()
         await dropCategories()
+        await dropTopics()
         await dropProducts()
     }
 
@@ -24,6 +27,7 @@ const dbConfig = async drop => {
     await createRoles()
     await createUser()
     await createCategories()
+    await createTopics()
     await createProducts()
 }
 

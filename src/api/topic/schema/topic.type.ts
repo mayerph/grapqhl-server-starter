@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-express'
 
-const categoryType = gql`
-    type Category {
+const topicType = gql`
+    type Topic {
         id: String!
         name: String!
         description: String
@@ -9,4 +9,4 @@ const categoryType = gql`
     }
 `
 
-export { categoryType }
+export { topicType }

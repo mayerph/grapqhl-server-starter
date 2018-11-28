@@ -3,6 +3,7 @@ import { permissionResolver } from './permission'
 import { roleResolver } from './role'
 import { categoryResolver } from './category'
 import { productResolver } from './product'
+import { topicResolver } from './topic'
 
 const resolvers = [
     userResolver,
@@ -10,6 +11,7 @@ const resolvers = [
     roleResolver,
     categoryResolver,
     productResolver,
+    topicResolver,
 ]
 
 export default resolvers

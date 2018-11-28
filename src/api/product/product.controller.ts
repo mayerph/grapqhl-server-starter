@@ -1,12 +1,13 @@
 import { Product } from './product.model'
 import { FileController } from '../file/file.controller'
 import { CategoryController } from '../category/category.controller'
+import { TopicController } from '../topic/topic.controller'
 
 const pictureName = 'productImage'
 
 const ProductController = {
     products: async () => {
-        //await Product.deleteMany({})
+        // await Product.deleteMany({})
         const products = await Product.find({})
         return products
     },
@@ -15,6 +16,8 @@ const ProductController = {
         return product
     },
     createProduct: async (
+        topicNames: string[],
+        stock: number,
         name: string,
         description: string,
         price: number,
@@ -30,8 +33,10 @@ const ProductController = {
             )
             img.save()
         }
-
+        const topic = ProductController.topicByName(topicNames)
         const product = new Product({
+            topic,
+            stock,
             name,
             description,
             price,
@@ -50,6 +55,8 @@ const ProductController = {
     },
     updateProduct: async (
         id: string,
+        topicNames: string[],
+        stock: number,
         name: string,
         description: string,
         price: number,
@@ -58,6 +65,13 @@ const ProductController = {
         productImage: any
     ) => {
         const product = await Product.findById(id)
+        if (topicNames) {
+            const topic = ProductController.topicByName(topicNames)
+            product.topic = topic
+        }
+        if (stock) {
+            product.stock = stock
+        }
         if (name) {
             product.name = name
         }
@@ -99,6 +113,28 @@ const ProductController = {
     img: async (imgId: string) => {
         const img = await FileController.file(imgId)
         return img
+    },
+    topic: async (topicIds: number[]) => {
+        if (!topicIds) {
+            return null
+        }
+        const topics = topicIds.map(async (e: any) => {
+            const topic = await TopicController.topic(e)
+            return topic
+        })
+        await Promise.all(topics)
+        return topics
+    },
+    topicByName: async (topicNames: string[]) => {
+        if (!topicNames) {
+            return null
+        }
+        const topics = topicNames.map(async (e: any) => {
+            const topic = await TopicController.topicByName(e)
+            return topic
+        })
+        await Promise.all(topics)
+        return topics
     },
 }
 

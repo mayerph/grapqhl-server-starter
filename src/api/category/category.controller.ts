@@ -1,4 +1,5 @@
 import { Category } from './category.model'
+import { Product } from '../product/product.model'
 
 const CategoryController = {
     categories: async () => {
@@ -33,6 +34,10 @@ const CategoryController = {
         }
         await category.save()
         return category
+    },
+    products: async (id: string) => {
+        const products = await Product.find({ categories: id })
+        return products
     },
 }
 

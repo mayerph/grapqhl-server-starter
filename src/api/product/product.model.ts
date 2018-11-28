@@ -10,6 +10,8 @@ interface IProductModelMongoose
         IProductModel {}
 
 const productSchema = new Schema({
+    topic: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+    stock: { type: Number, required: true, default: 0 },
     name: { type: String, unique: true, required: true, dropDups: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },

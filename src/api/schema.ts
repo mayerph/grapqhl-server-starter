@@ -7,6 +7,7 @@ import { categorySchema } from './category'
 import { genderSchema } from './gender'
 import { gql } from 'apollo-server-express'
 import { productSchema } from './product'
+import { topicSchema } from './topic'
 
 const linkSchema = gql`
     type Query {
@@ -28,7 +29,8 @@ const schemas = [linkSchema].concat(
     fileSchema,
     categorySchema,
     genderSchema,
-    productSchema
+    productSchema,
+    topicSchema
 )
 
 export default schemas

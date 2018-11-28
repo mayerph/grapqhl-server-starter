@@ -1,5 +1,6 @@
 import { Product } from '../../api/product/product.model'
 import { Category } from '../../api/category/category.model'
+import { Topic } from '../../api/topic/topic.model'
 
 const dropProducts = async () => {
     await Product.deleteMany({})
@@ -12,8 +13,14 @@ const createProducts = async () => {
 
     skiProduct = await Product.findOne({ name: 'ground ski' })
     if (!skiProduct) {
+        // category
         const skiCategory = await Category.findOne({ name: 'ski' })
+
+        // topic
+        const skiTopic = await Topic.findOne({ name: 'ski' })
+
         skiProduct = new Product({
+            topic: [skiTopic],
             name: 'ground ski',
             description: 'ground ski',
             price: 10000,
@@ -24,23 +31,34 @@ const createProducts = async () => {
     }
 
     snowboardProduct = await Product.findOne({ name: 'ground snowboard' })
-    if (!skiProduct) {
-        const skiCategory = await Category.findOne({ name: 'snowboard' })
-        skiProduct = new Product({
+    if (!snowboardProduct) {
+        //category
+        const snowboardCategory = await Category.findOne({ name: 'snowboard' })
+
+        //topic
+        const snowboardTopic = await Topic.findOne({ name: 'snowboard' })
+
+        snowboardProduct = new Product({
+            topic: [snowboardTopic],
             name: 'ground snowboard',
             description: 'ground snowboard',
             price: 10000,
-            categories: [skiCategory],
+            categories: [snowboardCategory],
             gender: 'MALE',
         })
-        skiProduct.save()
+        snowboardProduct.save()
     }
 
     skiShoeProduct = await Product.findOne({ name: 'ski-shoe' })
     if (!skiShoeProduct) {
+        // categories
         const skiCategory = await Category.findOne({ name: 'ski' })
         const equipmentCategory = await Category.findOne({ name: 'equipment' })
+
+        // topic
+        const skiTopic = await Topic.findOne({ name: 'ski' })
         skiShoeProduct = new Product({
+            topic: [skiTopic],
             name: 'ski-shoe',
             description: 'ski-shoe',
             price: 10000,

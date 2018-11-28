@@ -3,6 +3,8 @@ import { gql } from 'apollo-server-express'
 const productMutation = gql`
     extend type Mutation {
         createProduct(
+            topic: [String!]
+            stock: Int
             name: String!
             description: String!
             price: Int!
@@ -12,6 +14,8 @@ const productMutation = gql`
         ): Product!
         deleteProduct(id: ID!): Boolean!
         updateProduct(
+            topic: [String!]
+            stock: Int
             id: ID!
             name: String
             description: String

@@ -39,6 +39,12 @@ const categoryResolver = {
             return category
         },
     },
+    Category: {
+        products: async (category, args, context) => {
+            const products = await CategoryController.products(category.id)
+            return products
+        },
+    },
 }
 
 export { categoryResolver }

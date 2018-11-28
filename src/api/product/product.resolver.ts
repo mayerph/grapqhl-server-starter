@@ -17,10 +17,12 @@ const productResolver = {
     Mutation: {
         createProduct: async (
             parent,
-            { name, description, price, categories, gender, img },
+            { topic, stock, name, description, price, categories, gender, img },
             context
         ) => {
             const product = await ProductController.createProduct(
+                topic,
+                stock,
                 name,
                 description,
                 price,
@@ -37,11 +39,23 @@ const productResolver = {
         },
         updateProduct: async (
             parent,
-            { id, name, description, price, categories, gender, img },
+            {
+                id,
+                topic,
+                stock,
+                name,
+                description,
+                price,
+                categories,
+                gender,
+                img,
+            },
             { models }
         ) => {
             const product = await ProductController.updateProduct(
                 id,
+                topic,
+                stock,
                 name,
                 description,
                 price,
@@ -62,6 +76,10 @@ const productResolver = {
         img: async (product, { id }, { models }) => {
             const img = await ProductController.img(product.img)
             return img
+        },
+        topic: async (product, { id }, { models }) => {
+            const topic = await ProductController.topic(product.topic)
+            return topic
         },
     },
 }
