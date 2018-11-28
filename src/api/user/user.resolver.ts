@@ -1,10 +1,20 @@
 import { UserController } from './user.controller'
 import { FileController } from '../file/file.controller'
+import { pubsub } from '../app'
+
+const EVENTS = {
+    USER: {
+        CREATED: 'USER_CREATED',
+        UPDATED: 'USER_UPDATED',
+        DELETED: 'USER_DELETED',
+    },
+}
 
 const userResolver = {
     Query: {
         users: async (parent, args, context) => {
             const users = await UserController.users()
+            return users
         },
         user: async (parent, { id }, context) => {
             const user = await UserController.user(id)
@@ -18,12 +28,16 @@ const userResolver = {
 
     Mutation: {
         signUp: async (parent, { username, email, password }, { token }) => {
-            const userToken = await UserController.signUp(
+            const { userToken, user } = await UserController.signUp(
                 username,
                 email,
                 password,
                 token
             )
+
+            await pubsub.publish(EVENTS.USER.CREATED, {
+                userCreated: user,
+            })
             return userToken
         },
         signIn: async (parent, { username, password }, { token }) => {
@@ -36,6 +50,10 @@ const userResolver = {
         },
         deleteUser: async (parent, { id }, context) => {
             const successful = await UserController.deleteUser(id)
+
+            await pubsub.publish(EVENTS.USER.DELETED, {
+                userDeleted: id,
+            })
             return successful
         },
         createUser: async (
@@ -50,6 +68,11 @@ const userResolver = {
                 role,
                 img
             )
+
+            await pubsub.publish(EVENTS.USER.CREATED, {
+                userCreated: user,
+            })
+
             return user
         },
         updateUser: async (
@@ -65,7 +88,21 @@ const userResolver = {
                 role,
                 img
             )
+            await pubsub.publish(EVENTS.USER.UPDATED, {
+                userUpdated: user,
+            })
             return user
+        },
+    },
+    Subscription: {
+        userCreated: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.USER.CREATED]),
+        },
+        userUpdated: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.USER.UPDATED]),
+        },
+        userDeleted: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.USER.DELETED]),
         },
     },
     User: {

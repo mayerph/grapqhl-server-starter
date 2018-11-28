@@ -32,10 +32,10 @@ const createProducts = async () => {
 
     snowboardProduct = await Product.findOne({ name: 'ground snowboard' })
     if (!snowboardProduct) {
-        //category
+        // category
         const snowboardCategory = await Category.findOne({ name: 'snowboard' })
 
-        //topic
+        // topic
         const snowboardTopic = await Topic.findOne({ name: 'snowboard' })
 
         snowboardProduct = new Product({

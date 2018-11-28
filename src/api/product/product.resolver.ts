@@ -1,5 +1,14 @@
 import { Product } from './product.model'
 import { ProductController } from './product.controller'
+import { pubsub } from '../app'
+
+const EVENTS = {
+    PRODUCT: {
+        CREATED: 'PRODUCT_CREATED',
+        UPDATED: 'PRODUCT_UPDATED',
+        DELETED: 'PRODUCT_DELETED',
+    },
+}
 
 const productResolver = {
     Query: {
@@ -30,11 +39,18 @@ const productResolver = {
                 gender,
                 img
             )
+            await pubsub.publish(EVENTS.PRODUCT.CREATED, {
+                productCreated: product,
+            })
+
             return product
         },
 
         deleteProduct: async (parent, { id }, { models }) => {
             const successful = await ProductController.deleteProduct(id)
+            await pubsub.publish(EVENTS.PRODUCT.DELETED, {
+                productDeleted: id,
+            })
             return successful
         },
         updateProduct: async (
@@ -63,7 +79,22 @@ const productResolver = {
                 gender,
                 img
             )
+
+            await pubsub.publish(EVENTS.PRODUCT.UPDATED, {
+                productUpdated: product,
+            })
             return product
+        },
+    },
+    Subscription: {
+        userCreated: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.CREATED]),
+        },
+        userUpdated: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.UPDATED]),
+        },
+        userDeleted: {
+            subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.DELETED]),
         },
     },
     Product: {

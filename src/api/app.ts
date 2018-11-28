@@ -42,8 +42,10 @@ const apollo = new ApolloServer({
     subscriptions: {
         onConnect: async (connectionParams: any, webSocket, context) => {
             if (connectionParams.authToken) {
+                //if (true) {
                 const userToken = connectionParams.authToken
-                // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUkVBREVSIiwibWVzc2FnZXMiOlsiNWJlYWY4NGQ1NTJjNzI3MDhjYjhmZjQyIiwiNWJlYWY4OTBlNGE2NGM3MGM2NGFmZTI1IiwiNWJlYWZhNjM5MDU0MDY3MTlmZWEzNDhkIiwiNWJlYWZhOTVhNWIzYTg3MWI5NTRmNjdmIiwiNWJlYWZhYjJmZWY0ZDg3MWNjMmQ2NjliIiwiNWJlYWZiNzU0YjQ3YWU3MjIzMmJjYTdkIiwiNWJlYWZjMGU0YjQ3YWU3MjIzMmJjYTgyIiwiNWJlYmViZDkxMDQyMGU5MjA3ZWUyNTJlIiwiNWJlYmVjZDZiNGM4ZWQ5MjdlMjA3ZjRmIiwiNWJlZDcyNGI5YjUwYmMxODFmMzA1YWVhIiwiNWJlZDcyNGM5YjUwYmMxODFmMzA1YWViIiwiNWJlZDcyNGM5YjUwYmMxODFmMzA1YWVjIiwiNWJlZDcyNGQ5YjUwYmMxODFmMzA1YWVkIiwiNWJlZDcyNGQ5YjUwYmMxODFmMzA1YWVlIl0sIl9pZCI6IjViZWFmODNhNTUyYzcyNzA4Y2I4ZmY0MSIsInVzZXJuYW1lIjoidmFkZXIiLCJlbWFpbCI6InZhZGVyQGhtLmVkdSIsInBhc3N3b3JkIjoiJDJiJDEwJC5NTy9USFdCc0dHYVk4eGtQS2lwMGVBajAwOUxCT0VlejR0TXBDLlpjU1RoMXFwSGdDYnRHIiwiX192IjoxNCwiaWF0IjoxNTQyODc0NDg3LCJleHAiOjE1NDI4NzYyODd9.qIgHjGVrypGi5swEtwgein92Xu8MFcddeQAHBpah51c"
+                // const userToken =
+                // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmZkNjQxYTU1YzdkYzFmY2ZjNzA5ZTMiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkL0ZmT2xEdS9oSm9UdXdrSG5vNTBrT0NWaFJRa0g4R0JMYVlSclo4RWguaWJnMU9QdXNac3kiLCJlbWFpbCI6ImFkbWluQGhtLmVkdSIsInJvbGUiOiI1YmZkMjFjNDhlMmIzNTUzNjY3M2IxMzUiLCJfX3YiOjAsImlhdCI6MTU0MzQxODg3NCwiZXhwIjoxNTQzNDIwNjc0fQ.VYapjYggC7WuKAaF6TyUfA8PBc2aI7jR3mp503uHHpA'
                 return createContext(userToken)
             } else {
                 throw new Error('Missing auth token!')
