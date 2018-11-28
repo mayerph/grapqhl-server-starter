@@ -2,13 +2,16 @@ import { Role } from './role.model'
 
 const RoleController = {
     roles: async () => {
-        return Role.find({})
+        const roles = await Role.find({})
+        return roles
     },
     role: async (id: string) => {
-        return Role.findById(id)
+        const role = await Role.findById(id)
+        return role
     },
     rolesByPermission: async (permission: string) => {
-        return Role.find({ permissions: permission })
+        const roles = await Role.find({ permissions: permission })
+        return roles
     },
     createRole: async (name, permissions) => {
         // const permissions = PermissionController.

@@ -4,45 +4,60 @@ import { FileController } from '../file/file.controller'
 const userResolver = {
     Query: {
         users: async (parent, args, context) => {
-            return UserController.users()
+            const users = await UserController.users()
         },
         user: async (parent, { id }, context) => {
-            return UserController.user(id)
+            const user = await UserController.user(id)
+            return user
         },
         me: async (parent, args, { auth: { me } }) => {
-            return UserController.user(me.id)
+            const user = await UserController.user(me.id)
+            return user
         },
     },
 
     Mutation: {
         signUp: async (parent, { username, email, password }, { token }) => {
-            return UserController.signUp(username, email, password, token)
+            const userToken = await UserController.signUp(
+                username,
+                email,
+                password,
+                token
+            )
+            return userToken
         },
         signIn: async (parent, { username, password }, { token }) => {
-            return UserController.signIn(username, password, token)
+            const userToken = await UserController.signIn(
+                username,
+                password,
+                token
+            )
+            return userToken
         },
         deleteUser: async (parent, { id }, context) => {
-            return UserController.deleteUser(id)
+            const successful = await UserController.deleteUser(id)
+            return successful
         },
         createUser: async (
             parent,
             { username, email, password, role, img },
             context
         ) => {
-            return UserController.createUser(
+            const user = await UserController.createUser(
                 username,
                 email,
                 password,
                 role,
                 img
             )
+            return user
         },
         updateUser: async (
             parent,
             { id, username, password, email, role, img },
             context
         ) => {
-            return UserController.updateUser(
+            const user = await UserController.updateUser(
                 id,
                 username,
                 password,
@@ -50,6 +65,7 @@ const userResolver = {
                 role,
                 img
             )
+            return user
         },
     },
     User: {

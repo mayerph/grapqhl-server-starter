@@ -3,10 +3,12 @@ import { RoleController } from '../role/role.controller'
 
 const PermissionController = {
     permissions: async () => {
-        return Permission.find({})
+        const permissions = await Permission.find({})
+        return permissions
     },
     permission: async (id: string) => {
-        return Permission.findById(id)
+        const permission = await Permission.findById(id)
+        return permission
     },
     createPermission: async (name: string, description: string) => {
         const permission = new Permission({ name, description })

@@ -3,22 +3,34 @@ import { PermissionController } from './permission.controller'
 const permissionResolver = {
     Query: {
         permissions: async (parent, args, context) => {
-            return PermissionController.permissions()
+            const permissions = await PermissionController.permissions()
+            return permissions
         },
         permission: async (parent, { id }, context) => {
-            return PermissionController.permission(id)
+            const permission = await PermissionController.permission(id)
+            return permission
         },
     },
 
     Mutation: {
         createPermission: async (parent, { name, description }) => {
-            return PermissionController.createPermission(name, description)
+            const permission = await PermissionController.createPermission(
+                name,
+                description
+            )
+            return permission
         },
         deletePermission: async (parent, { id }) => {
-            return PermissionController.deletePermission(id)
+            const successful = await PermissionController.deletePermission(id)
+            return successful
         },
         updatePermission: async (parent, { id, name, description }) => {
-            return PermissionController.updatePermission(id, name, description)
+            const permission = await PermissionController.updatePermission(
+                id,
+                name,
+                description
+            )
+            return permission
         },
     },
 }

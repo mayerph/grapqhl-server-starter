@@ -53,7 +53,8 @@ const FileController = {
         return image
     },
     file: async id => {
-        return File.findById(id)
+        const file = await File.findById(id)
+        return file
     },
 }
 

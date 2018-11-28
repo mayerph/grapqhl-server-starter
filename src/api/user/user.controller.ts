@@ -8,10 +8,12 @@ const pictureName = 'userImage'
 
 const UserController = {
     users: async () => {
-        return User.find({})
+        const users = await User.find({})
+        return users
     },
     user: async (id: string) => {
-        return User.findById(id)
+        const user = await User.findById(id)
+        return user
     },
     fullUser: async (id: string) => {
         const user = await User.findById(id).populate({
@@ -73,7 +75,7 @@ const UserController = {
     ) => {
         let img
         if (userImage) {
-            img = await FileController.createImageFile(pictureName, img)
+            img = await FileController.createImageFile(pictureName, userImage)
             img.save()
         }
         const userRole = await RoleController.role(roleId)
@@ -87,7 +89,8 @@ const UserController = {
             .exec()).role
     },
     messageOwner: async (messageId, userId) => {
-        return User.findOne({ messages: messageId, _id: userId })
+        const user = await User.findOne({ messages: messageId, _id: userId })
+        return user
     },
     updateUser: async (
         id: any,
@@ -116,11 +119,11 @@ const UserController = {
                 pictureName,
                 userImage
             )
-            console.log(img)
+
             user.img = img
         }
 
-        user.save()
+        await user.save()
 
         return user
     },

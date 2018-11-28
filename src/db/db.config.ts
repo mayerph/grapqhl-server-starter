@@ -5,6 +5,10 @@ import {
     dropPermissions,
     createRoles,
     dropRoles,
+    createCategories,
+    dropCategories,
+    createProducts,
+    dropProducts,
 } from './script'
 
 const dbConfig = async drop => {
@@ -12,11 +16,15 @@ const dbConfig = async drop => {
         await dropUser()
         await dropRoles()
         await dropPermissions()
+        await dropCategories()
+        await dropProducts()
     }
 
     await createPermissions()
     await createRoles()
     await createUser()
+    await createCategories()
+    await createProducts()
 }
 
 export { dbConfig }

@@ -3,7 +3,10 @@ import { authSchema } from './auth'
 import { permissionSchema } from './permission'
 import { roleSchema } from './role'
 import { fileSchema } from './file'
+import { categorySchema } from './category'
+import { genderSchema } from './gender'
 import { gql } from 'apollo-server-express'
+import { productSchema } from './product'
 
 const linkSchema = gql`
     type Query {
@@ -22,7 +25,10 @@ const schemas = [linkSchema].concat(
     authSchema,
     permissionSchema,
     roleSchema,
-    fileSchema
+    fileSchema,
+    categorySchema,
+    genderSchema,
+    productSchema
 )
 
 export default schemas

@@ -4,27 +4,33 @@ import { PermissionController } from '../permission/permission.controller'
 const roleResolver = {
     Query: {
         roles: async (parent, args, context) => {
-            return RoleController.roles()
+            const roles = await RoleController.roles()
+            return roles
         },
         role: async (parent, { id }, context) => {
-            return RoleController.role(id)
+            const role = await RoleController.role(id)
+            return role
         },
     },
 
     Mutation: {
         createRole: async (parent, { name, permissions }) => {
-            return RoleController.createRole(name, permissions)
+            const role = await RoleController.createRole(name, permissions)
+            return role
         },
         deleteRole: async (parent, { id }) => {
-            return RoleController.deleteRole(id)
+            const successful = await RoleController.deleteRole(id)
+            return successful
         },
         updateRole: async (parent, { id, name, permissions }) => {
-            return RoleController.updateRole(id, name, permissions)
+            const role = await RoleController.updateRole(id, name, permissions)
+            return role
         },
     },
     Role: {
         permissions: async (role, args, { models }) => {
-            return RoleController.rolePermissions(role)
+            const permissions = await RoleController.rolePermissions(role)
+            return permissions
         },
     },
 }

@@ -23,12 +23,14 @@ export class IsAuthDirective extends SchemaDirectiveVisitor {
             throw new Error('not authenticated as users.')
         }
 
-        return this.setSignedUser(args, user)
+        const newArgs = await this.setSignedUser(args, user)
+        return newArgs
     }
     private async getUser(userToken: string) {
         if (userToken) {
             const user: any = await AuthController.verifyToken(userToken)
-            return UserController.fullUser(user._id)
+            const fullUser = await UserController.fullUser(user._id)
+            return fullUser
         }
     }
 
