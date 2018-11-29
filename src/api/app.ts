@@ -42,7 +42,7 @@ const apollo = new ApolloServer({
     subscriptions: {
         onConnect: async (connectionParams: any, webSocket, context) => {
             if (connectionParams.authToken) {
-                //if (true) {
+                // if (true) {
                 const userToken = connectionParams.authToken
                 // const userToken =
                 // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmZkNjQxYTU1YzdkYzFmY2ZjNzA5ZTMiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkL0ZmT2xEdS9oSm9UdXdrSG5vNTBrT0NWaFJRa0g4R0JMYVlSclo4RWguaWJnMU9QdXNac3kiLCJlbWFpbCI6ImFkbWluQGhtLmVkdSIsInJvbGUiOiI1YmZkMjFjNDhlMmIzNTUzNjY3M2IxMzUiLCJfX3YiOjAsImlhdCI6MTU0MzQxODg3NCwiZXhwIjoxNTQzNDIwNjc0fQ.VYapjYggC7WuKAaF6TyUfA8PBc2aI7jR3mp503uHHpA'

@@ -10,7 +10,7 @@ const config = {
             host: '127.0.0.1',
             port: 27017,
             db: 'skiLeasing',
-            config: true,
+            config: false,
             drop: false,
         },
         api: {
@@ -23,6 +23,9 @@ const config = {
     },
     testing: {
         id: 'testing',
+        database: {
+            config: false,
+        },
     },
     staging: {
         id: 'staging',

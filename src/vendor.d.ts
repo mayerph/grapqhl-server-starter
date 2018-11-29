@@ -6,5 +6,7 @@ declare module '*.json' {
 declare namespace NodeJS {
     export interface Global {
         gConfig: any
+        mongod: any
+        db: any
     }
 }

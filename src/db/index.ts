@@ -1,7 +1,13 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 import { dbConfig } from './db.config'
 
-const uri: string = 'mongodb://' + global.gConfig.database.host + ":" + global.gConfig.database.port + '/' + global.gConfig.database.db
+const uri: string =
+    'mongodb://' +
+    global.gConfig.database.host +
+    ':' +
+    global.gConfig.database.port +
+    '/' +
+    global.gConfig.database.db
 const db = {
     connect: async () => {
         try {
@@ -10,10 +16,18 @@ const db = {
                 await dbConfig(global.gConfig.database.drop)
             }
         } catch (err) {
-            throw new Error("connection to mongodb failed. Please make sure mongodb is running. " + err);
+            throw new Error(
+                'connection to mongodb failed. Please make sure mongodb is running. ' +
+                    err
+            )
         }
-        
-    }
+    },
+    disconnect: async () => {
+        await mongoose.disconnect()
+    },
+    dropDatabase: async () => {
+        await mongoose.connection.db.dropDatabase()
+    },
 }
 
 export default db

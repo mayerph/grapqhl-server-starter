@@ -1,11 +1,12 @@
 module.exports = {
+    //transformIgnorePatterns: ['<rootDir>/node_modules/'],
     globals: {
         'ts-jest': {
             tsConfig: 'tsconfig.json',
         },
     },
     moduleFileExtensions: ['js', 'ts'],
-    testMatch: ['**/test/**/*.test.(ts|js)'],
+    testMatch: ['**/test/suites/**/*.test.(ts)'],
     testEnvironment: 'node',
     preset: 'ts-jest',
     collectCoverage: true,
