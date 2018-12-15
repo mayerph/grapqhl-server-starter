@@ -5,12 +5,14 @@ const config = {
         id: 'development',
         app_name: 'graphql-server-starter',
         app_desc: 'graphql-server-starter',
+        server: '127.0.0.1',
+        protocol: 'http',
         server_port: 8000,
         database: {
             host: '127.0.0.1',
             port: 27017,
             db: 'skiLeasing',
-            config: false,
+            config: true,
             drop: false,
         },
         api: {

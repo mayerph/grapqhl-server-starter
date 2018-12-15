@@ -19,6 +19,7 @@ db.connect()
 // express
 const app = express()
 app.set('port', global.gConfig.server_port)
+app.use('/static', express.static('public'))
 app.use(cors())
 
 app.use(

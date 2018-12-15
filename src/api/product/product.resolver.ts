@@ -87,13 +87,13 @@ const productResolver = {
         },
     },
     Subscription: {
-        userCreated: {
+        productCreated: {
             subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.CREATED]),
         },
-        userUpdated: {
+        productUpdated: {
             subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.UPDATED]),
         },
-        userDeleted: {
+        productDeleted: {
             subscribe: () => pubsub.asyncIterator([EVENTS.PRODUCT.DELETED]),
         },
     },

@@ -9,9 +9,9 @@ const createRoles = async () => {
     let readerRole
 
     adminRole = await Role.findOne({ name: 'ADMIN' })
+
     if (!adminRole) {
         const permissions = await Permission.find({})
-
         adminRole = new Role({
             name: 'ADMIN',
             permissions,

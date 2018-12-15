@@ -68,7 +68,6 @@ const userResolver = {
                 role,
                 img
             )
-
             await pubsub.publish(EVENTS.USER.CREATED, {
                 userCreated: user,
             })
@@ -88,6 +87,7 @@ const userResolver = {
                 role,
                 img
             )
+
             await pubsub.publish(EVENTS.USER.UPDATED, {
                 userUpdated: user,
             })

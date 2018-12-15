@@ -8,11 +8,11 @@ const userType = gql`
     type User {
         id: String!
         username: String!
-        password: String! @hasPermission(requiredPermission: readPassword)
+        password: String!
         email: String!
         role: Role
         img: File
     }
 `
-
+// @hasPermission(requiredPermission: readPassword)
 export { userType }

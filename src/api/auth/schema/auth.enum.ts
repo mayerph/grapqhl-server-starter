@@ -1,7 +1,8 @@
-import { gql } from 'apollo-server-express';
+import { gql } from 'apollo-server-express'
 
 const authEnum = gql`
     enum UserPermission {
+        adminUser
         deleteUser
         updateUser
         createUser
@@ -10,6 +11,6 @@ const authEnum = gql`
         createMessage
         readPassword
     }
-`;
+`
 
 export { authEnum }

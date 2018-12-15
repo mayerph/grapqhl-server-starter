@@ -5,6 +5,7 @@ const dropPermissions = async () => {
 }
 
 const createPermissions = async () => {
+    let adminUserPermission
     let deleteUserPermission
     let updateUserPermission
     let createUserPermission
@@ -19,6 +20,15 @@ const createPermissions = async () => {
             description: 'Ability to delete Users',
         })
         deleteUserPermission.save()
+    }
+
+    adminUserPermission = await Permission.findOne({ name: 'adminUser' })
+    if (!adminUserPermission) {
+        adminUserPermission = new Permission({
+            name: 'adminUser',
+            description: 'Ability to administrate User',
+        })
+        adminUserPermission.save()
     }
 
     updateUserPermission = await Permission.findOne({ name: 'updateUser' })

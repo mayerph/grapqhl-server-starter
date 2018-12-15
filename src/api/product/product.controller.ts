@@ -3,7 +3,7 @@ import { FileController } from '../file/file.controller'
 import { CategoryController } from '../category/category.controller'
 import { TopicController } from '../topic/topic.controller'
 
-const pictureName = 'productImage'
+const pictureName = 'images/user/productImage'
 
 const ProductController = {
     products: async () => {

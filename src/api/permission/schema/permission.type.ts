@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express'
 
 const permissionType = gql`
     type Permission {
-        id: String!
+        id: ID!
         name: String!
         description: String!
     }

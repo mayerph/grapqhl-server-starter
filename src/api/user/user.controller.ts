@@ -4,7 +4,7 @@ import { Role } from '../role/role.model'
 import { RoleController } from '../role/role.controller'
 import { FileController } from '../file/file.controller'
 
-const pictureName = 'userImage'
+const pictureName = 'images/user/userImage'
 
 const UserController = {
     users: async () => {
@@ -51,7 +51,7 @@ const UserController = {
         if (!user) {
             throw new Error('No user found with this login credentials.')
         }
-
+        const fullUser = await UserController.fullUser(user.id)
         const isValid = await user.comparePassword(password)
 
         if (!isValid) {
@@ -59,7 +59,7 @@ const UserController = {
         }
         return {
             token: AuthController.createToken(
-                user.toJSON(),
+                fullUser.toJSON(),
                 token.secret,
                 token.expiresIn
             ),
@@ -82,7 +82,13 @@ const UserController = {
             img.save()
         }
         const userRole = await RoleController.role(roleId)
-        const user = new User({ username, email, password, userRole, img })
+        const user = new User({
+            username,
+            email,
+            password,
+            role: userRole,
+            img,
+        })
         await user.save()
         return user
     },

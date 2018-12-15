@@ -1,4 +1,4 @@
-import { Category } from '../../api/category/category.model'
+/*import { Category } from '../../api/category/category.model'
 import { dbSetup } from '../setup.env'
 
 beforeAll(async () => {
@@ -28,3 +28,4 @@ it('adds 1 + 2 to equal 3', async () => {
     console.log(await Category.find({}))
     expect(1 + 2).toBe(3)
 })
+*/

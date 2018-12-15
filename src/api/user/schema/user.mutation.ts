@@ -8,13 +8,14 @@ const userMutation = gql`
         signIn(username: String!, password: String!): Token!
         deleteUser(id: ID!): Boolean!
             @hasPermission(requiredPermission: deleteUser)
+
         createUser(
             username: String!
             email: String!
             role: ID!
             password: String!
             img: Upload
-        ): User! @hasPermission(requiredPermission: createUser)
+        ): User @hasPermission(requiredPermission: createUser)
         updateUser(
             id: ID!
             username: String
@@ -25,5 +26,7 @@ const userMutation = gql`
         ): User @hasPermission(requiredPermission: updateUser)
     }
 `
-
+//@hasPermission(requiredPermission: updateUser)
+//@hasPermission(requiredPermission: deleteUser)
+//@hasPermission(requiredPermission: createUser)
 export { userMutation }

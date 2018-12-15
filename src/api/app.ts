@@ -36,16 +36,18 @@ const apollo = new ApolloServer({
         if (connection) {
             return connection.context
         }
+        //console.log(req.headers.authentication)
         const userToken = req.headers.authentication
+        console.log(userToken)
         return createContext(userToken)
     },
     subscriptions: {
         onConnect: async (connectionParams: any, webSocket, context) => {
-            if (connectionParams.authToken) {
-                // if (true) {
+            if (connectionParams.authentication) {
+                //if (true) {
                 const userToken = connectionParams.authToken
-                // const userToken =
-                // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmZkNjQxYTU1YzdkYzFmY2ZjNzA5ZTMiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkL0ZmT2xEdS9oSm9UdXdrSG5vNTBrT0NWaFJRa0g4R0JMYVlSclo4RWguaWJnMU9QdXNac3kiLCJlbWFpbCI6ImFkbWluQGhtLmVkdSIsInJvbGUiOiI1YmZkMjFjNDhlMmIzNTUzNjY3M2IxMzUiLCJfX3YiOjAsImlhdCI6MTU0MzQxODg3NCwiZXhwIjoxNTQzNDIwNjc0fQ.VYapjYggC7WuKAaF6TyUfA8PBc2aI7jR3mp503uHHpA'
+                //const userToken =
+                //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmZkNjQxYTU1YzdkYzFmY2ZjNzA5ZTMiLCJ1c2VybmFtZSI6ImFkbWlubiIsInBhc3N3b3JkIjoiJDJiJDEwJC9GZk9sRHUvaEpvVHV3a0hubzUwa09DVmhSUWtIOEdCTGFZUnJaOEVoLmliZzFPUHVzWnN5IiwiZW1haWwiOiJhZG1pbkBobS5lZHUiLCJyb2xlIjoiNWJmZDIxYzQ4ZTJiMzU1MzY2NzNiMTM1IiwiX192IjowLCJpbWciOiI1YzBlYzZhOTRhMTM4M2Q3YzI1NzA1NjAiLCJpYXQiOjE1NDQ1NTIwNDMsImV4cCI6MTU0NDU1Mzg0M30.w20IityB7v00JMDm-Q1rBKL5XEefPOfHIBvEF3A3Lh4'
                 return createContext(userToken)
             } else {
                 throw new Error('Missing auth token!')
