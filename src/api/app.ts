@@ -36,9 +36,8 @@ const apollo = new ApolloServer({
         if (connection) {
             return connection.context
         }
-        //console.log(req.headers.authentication)
+
         const userToken = req.headers.authentication
-        console.log(userToken)
         return createContext(userToken)
     },
     subscriptions: {
