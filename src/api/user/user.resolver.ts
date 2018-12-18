@@ -76,7 +76,7 @@ const userResolver = {
         },
         updateUser: async (
             parent,
-            { id, username, password, email, role, img },
+            { id, username, password, email, role, img, deleteImage },
             context
         ) => {
             const user = await UserController.updateUser(
@@ -85,7 +85,8 @@ const userResolver = {
                 password,
                 email,
                 role,
-                img
+                img,
+                deleteImage
             )
 
             await pubsub.publish(EVENTS.USER.UPDATED, {
@@ -96,7 +97,7 @@ const userResolver = {
 
         updateMe: async (
             parent,
-            { username, password, email, role, img },
+            { username, password, email, role, img, deleteImage },
             { auth: { me } }
         ) => {
             const user = await UserController.updateUser(
@@ -105,7 +106,8 @@ const userResolver = {
                 password,
                 email,
                 role,
-                img
+                img,
+                deleteImage
             )
 
             await pubsub.publish(EVENTS.USER.UPDATED, {

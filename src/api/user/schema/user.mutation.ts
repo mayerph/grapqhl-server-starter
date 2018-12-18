@@ -23,6 +23,7 @@ const userMutation = gql`
             email: String
             role: ID
             img: Upload
+            deleteImage: Boolean
         ): User @hasPermission(requiredPermission: updateUser)
         updateMe(
             username: String
@@ -30,6 +31,7 @@ const userMutation = gql`
             email: String
             role: ID
             img: Upload
+            deleteImage: Boolean
         ): User @hasPermission(requiredPermission: readDefault)
     }
 `

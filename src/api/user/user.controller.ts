@@ -108,7 +108,8 @@ const UserController = {
         password: string,
         email: string,
         roleId: string,
-        userImage: any
+        userImage: any,
+        deleteImage: boolean
     ) => {
         const user = await User.findById(id)
         if (username) {
@@ -131,6 +132,10 @@ const UserController = {
             )
 
             user.img = img
+        }
+
+        if (deleteImage) {
+            user.img = null
         }
 
         await user.save()
