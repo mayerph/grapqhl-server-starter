@@ -13,12 +13,12 @@ const config = {
             port: 27017,
             db: 'skiLeasing',
             config: true,
-            drop: false,
+            drop: true,
         },
         api: {
             endpoint: '/graphql',
             upload: {
-                maxFileSize: 1000000,
+                maxFileSize: 10000000,
                 maxFiles: 10,
             },
         },

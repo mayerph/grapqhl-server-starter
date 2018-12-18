@@ -21,7 +21,7 @@ const createRoles = async () => {
 
     readerRole = await Role.findOne({ name: 'READER' })
     if (!readerRole) {
-        const permissionNames = ['createMessage', 'deleteMessage']
+        const permissionNames = ['readDefault']
         const permissions = await Permission.find({ name: permissionNames })
 
         readerRole = new Role({

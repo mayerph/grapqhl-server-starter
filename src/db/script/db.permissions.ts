@@ -5,6 +5,8 @@ const dropPermissions = async () => {
 }
 
 const createPermissions = async () => {
+    let adminDefaultPermission
+    let readDefaultPermission
     let adminUserPermission
     let deleteUserPermission
     let updateUserPermission
@@ -12,6 +14,26 @@ const createPermissions = async () => {
     let deleteMessagePermission
     let updateMessagePermission
     let createMessagePermission
+
+    adminDefaultPermission = await Permission.findOne({ name: 'adminDefault' })
+    if (!adminDefaultPermission) {
+        adminDefaultPermission = new Permission({
+            name: 'adminDefault',
+            description: 'default permissions for administration',
+        })
+        adminDefaultPermission.save()
+    }
+
+    readDefaultPermission = await Permission.findOne({
+        name: 'readDefault',
+    })
+    if (!readDefaultPermission) {
+        readDefaultPermission = new Permission({
+            name: 'readDefault',
+            description: 'default permissions for reading',
+        })
+        readDefaultPermission.save()
+    }
 
     deleteUserPermission = await Permission.findOne({ name: 'deleteUser' })
     if (!deleteUserPermission) {

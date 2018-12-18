@@ -18,7 +18,6 @@ export class IsAuthDirective extends SchemaDirectiveVisitor {
         if (args[2].auth) {
             user = await this.getUser(args[2].auth.userToken)
         }
-
         if (!user) {
             throw new Error('not authenticated as users.')
         }

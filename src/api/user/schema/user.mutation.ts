@@ -24,6 +24,13 @@ const userMutation = gql`
             role: ID
             img: Upload
         ): User @hasPermission(requiredPermission: updateUser)
+        updateMe(
+            username: String
+            password: String
+            email: String
+            role: ID
+            img: Upload
+        ): User @hasPermission(requiredPermission: readDefault)
     }
 `
 //@hasPermission(requiredPermission: updateUser)

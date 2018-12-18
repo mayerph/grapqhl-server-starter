@@ -4,7 +4,7 @@ const userQuery = gql`
     extend type Query {
         users: [User!] @hasPermission(requiredPermission: adminUser)
         user(id: ID!): User @hasPermission(requiredPermission: adminUser)
-        me: User
+        me: User @hasPermission(requiredPermission: readDefault)
     }
 `
 

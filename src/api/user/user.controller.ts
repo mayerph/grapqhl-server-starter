@@ -34,10 +34,11 @@ const UserController = {
     ) => {
         const user = new User({ username, email, password })
         await user.save()
+        const fullUser = await UserController.fullUser(user.id)
         return {
             userToken: {
                 token: AuthController.createToken(
-                    user.toJSON(),
+                    fullUser.toJSON(),
                     token.secret,
                     token.expiresIn
                 ),

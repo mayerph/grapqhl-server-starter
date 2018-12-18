@@ -93,6 +93,26 @@ const userResolver = {
             })
             return user
         },
+
+        updateMe: async (
+            parent,
+            { username, password, email, role, img },
+            { auth: { me } }
+        ) => {
+            const user = await UserController.updateUser(
+                me.id,
+                username,
+                password,
+                email,
+                role,
+                img
+            )
+
+            await pubsub.publish(EVENTS.USER.UPDATED, {
+                userUpdated: user,
+            })
+            return user
+        },
     },
     Subscription: {
         userCreated: {
