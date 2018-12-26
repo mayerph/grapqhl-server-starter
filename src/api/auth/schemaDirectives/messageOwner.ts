@@ -7,10 +7,8 @@ export class MessageOwnerDirective extends IsAuthDirective {
         const { resolve = defaultFieldResolver } = field
 
         field.resolve = async (...args: any[]) => {
-            // 1. prüfen ob User angemeldet ist --> setzte angemeldeten user
             args = await this.isAuth(args)
 
-            // 2. Ist der User der Urheber der Nachricht
             const [
                 src,
                 { id },
