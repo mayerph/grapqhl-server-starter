@@ -1,5 +1,4 @@
-import { authEnum } from './schema'
 import { authDirectives } from './schema/auth.directive'
 
-const authSchema = [authDirectives, authEnum]
+const authSchema = [authDirectives]
 export { authSchema }

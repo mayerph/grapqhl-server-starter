@@ -1,4 +1,14 @@
-import { permissionType, permissionQuery, permissionMutation } from './schema'
+import {
+    permissionType,
+    permissionQuery,
+    permissionMutation,
+    permissionEnum,
+} from './schema'
 
-const permissionSchema = [permissionType, permissionQuery, permissionMutation]
+const permissionSchema = [
+    permissionType,
+    permissionQuery,
+    permissionMutation,
+    permissionEnum,
+]
 export { permissionSchema }
