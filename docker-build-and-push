@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+setopt null_glob
+setopt extended_glob
+
+#set -x #for debugging
+set -e
+set -u
+
+dockerfile="Dockerfile"
+branchname=`git branch | sed 's/^..//'`
+suffix=''
+tagLatest="yes"
+
+while getopts :b:f:s: option ; do
+    case $option in
+        b)
+           branchname=$OPTARG ;;
+        f)
+           dockerfile=$OPTARG ;;
+        s)
+           suffix=$OPTARG
+           tagLatest="no" ;;
+        [?])
+           Usage ;;
+    esac
+done
+
+if [ "$suffix" != "" ] ; then
+   suffix="-$suffix"
+fi
+
+reponame=`git remote get-url origin | sed 's,https://github.com/,, ;  s/\.git$// ; s,/,-,' | tr '[:upper:]' '[:lower:]'`
+host="localhost:5000"
+defaultTag="${host}/${reponame}:${branchname}${suffix}"
+latestTag="${host}/${reponame}:latest"
+
+print "++ Building docker container..."
+docker build -t ${defaultTag} -f ${dockerfile} .
+
+print "++ Pushing ${reponame}:${branchname} to registry"
+docker push ${defaultTag}
+
+if [ "$tagLatest" != "no" ] ; then
+   print "++ Pushing ${reponame}:latest to registry"
+   docker tag ${defaultTag} ${latestTag}
+   docker push ${latestTag}
+   docker image remove ${latestTag}
+fi
+
+# Cleanup
+docker image remove ${defaultTag}
+
+print
+print ">>> You can now start your application with "
+print
+print "   docker run terraform.cs.hm.edu:5043/${reponame}:${branchname}${suffix}"
+print
+print ">>> do not forget to login before and map some ports and the like."
+print
