@@ -6,6 +6,8 @@ pipeline {
                 docker { image 'node:lts-alpine' }
             }   
             steps {
+                sh 'python -V'
+                sh 'lsb_release -a'
                 sh 'npm install'
                 sh 'npm run lint'
             }
