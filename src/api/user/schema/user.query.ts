@@ -9,5 +9,3 @@ const userQuery = gql`
 `
 
 export { userQuery }
-
-//@hasPermission(requiredPermission: createUser)
