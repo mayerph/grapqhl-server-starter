@@ -35,7 +35,4 @@ const userMutation = gql`
         ): User @hasPermission(requiredPermission: readDefault)
     }
 `
-//@hasPermission(requiredPermission: updateUser)
-//@hasPermission(requiredPermission: deleteUser)
-//@hasPermission(requiredPermission: createUser)
 export { userMutation }
