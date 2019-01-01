@@ -6,7 +6,6 @@ pipeline {
                 docker { image 'node:lts-alpine' }
             }   
             steps {
-                sh 'npm install -g node-gyp'
                 sh 'npm install'
                 sh 'npm run lint'
             }
