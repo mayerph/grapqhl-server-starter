@@ -42,6 +42,7 @@ docker-compose build
 
 print "++ Pushing ${reponame}:${branchname} to registry"
 #docker push ${defaultTag}
+#
 docker-compose push
 
 if [ "$tagLatest" != "no" ] ; then
