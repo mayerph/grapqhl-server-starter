@@ -1,14 +1,12 @@
 pipeline {
-    agent none
+    agent { dockerfile true }
     stages {
         stage('Lint') {
             agent {
                 docker { image 'node:lts-alpine' }
             }   
             steps {
-                sh 'RUN apk add --no-cache make gcc g++ python && \
-                    npm install --production --silent && \
-                    apk del make gcc g++ python'
+                sh 'npm install'
                 sh 'npm run lint'
             }
         }
