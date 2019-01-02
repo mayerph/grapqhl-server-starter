@@ -6,8 +6,9 @@ pipeline {
                 docker { image 'node:lts-alpine' }
             }   
             steps {
-                sh 'lsb_release -a'
-                sh 'npm install'
+                sh 'RUN apk add --no-cache --virtual .build-deps alpine-sdk python \
+                    && npm install --production --silent \
+                    && apk del .build-deps'
                 sh 'npm run lint'
             }
         }
