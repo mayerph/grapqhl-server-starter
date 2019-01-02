@@ -6,7 +6,6 @@ pipeline {
                 dockerfile: true
             }   
             steps {
-                sh 'echo hello'
                 sh 'npm install'
                 sh 'npm run lint'
             }
