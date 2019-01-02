@@ -1,9 +1,9 @@
 pipeline {
-    agent { dockerfile true }
+    agent none
     stages {
         stage('Lint') {
             agent {
-                docker { image 'node:lts-alpine' }
+                dockerfile: true
             }   
             steps {
                 sh 'npm install'
@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             agent {
-                docker { image 'node:lts-alpine' }
+                dockerfile: true
             }
             steps {
                 sh 'npm run build-ts '
