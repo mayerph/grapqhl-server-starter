@@ -6,7 +6,9 @@ pipeline {
                 docker { image 'node:lts-alpine' }
             }   
             steps {
+                sh 'apk add --no-cache make gcc g++ python'
                 sh 'npm install'
+                sh 'apk del make gcc g++ python'
                 sh 'npm run lint'
             }
         }
