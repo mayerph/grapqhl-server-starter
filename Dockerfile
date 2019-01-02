@@ -7,4 +7,4 @@ RUN apk add --no-cache --virtual .gyp python make g++
 RUN npm install
 RUN apk del .gyp
 
-CMD ["npm", "run", "start"]
+CMD ["ls"]
