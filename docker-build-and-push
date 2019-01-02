@@ -55,7 +55,9 @@ docker image remove ${defaultTag}
 print
 print ">>> You can now start your application with "
 print
-print "   docker run terraform.cs.hm.edu:5043/${reponame}:${branchname}${suffix}"
+print "   docker run terraform.cs.hm.edu:5043/${reponame}:${branchname}${suffix} /bin/bash"
 print
+print "on Mac: docker run -it terraform.cs.hm.edu:5043/${reponame}:${branchname}${suffix} /bin/sh"
+print 
 print ">>> do not forget to login before and map some ports and the like."
 print
