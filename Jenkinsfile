@@ -12,7 +12,7 @@ pipeline {
                 sh 'apk add --no-cache make gcc g++ python'
                 sh 'npm install'
                 sh 'apk del make gcc g++ python'
-                sh 'npm run lint'
+                sh 'echo hello world'
             }
         }
         stage('Build') {
