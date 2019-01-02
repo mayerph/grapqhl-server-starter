@@ -13,7 +13,7 @@ const config = {
             port: 27017,
             db: 'skiLeasing',
             config: true,
-            drop: true,
+            drop: false,
         },
         api: {
             endpoint: '/graphql',
