@@ -1,10 +1,7 @@
-FROM node:lts-alpine as builder
+FROM node:lts-alpine
 
-## Install build toolchain, install node deps and compile native add-ons
 RUN apk add --no-cache --virtual .gyp python make g++
 RUN npm install
+RUN apk del .gyp
 
-FROM node:lts-alpine as app
-
-## Copy built node modules and binaries without including the toolchain
-COPY --from=builder node_modules .
+CMD [ "node" ]
