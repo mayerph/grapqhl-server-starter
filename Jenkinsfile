@@ -9,9 +9,9 @@ pipeline {
                 }
             }   
             steps {
-                sh 'apk add --no-cache make gcc g++ python'
+                sh 'apk add --no-cache --virtual .gyp python make g++'
                 sh 'npm install'
-                sh 'apk del make gcc g++ python'
+                sh 'apk del .gyp'
                 sh 'echo hello world'
             }
         }
