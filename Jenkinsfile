@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Lint') {
             agent {
-                docker { image 'node:lts-alpine' }
+                docker { 
+                    image 'node:lts-alpine' 
+                    args '-u root:root'
+                }
             }   
             steps {
                 sh 'apk add --no-cache make gcc g++ python'
