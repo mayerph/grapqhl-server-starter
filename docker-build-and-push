@@ -37,11 +37,12 @@ defaultTag="${host}/${reponame}:${branchname}${suffix}"
 latestTag="${host}/${reponame}:latest"
 
 print "++ Building docker container..."
-docker build -t ${defaultTag} -f ${dockerfile} .
-#docker-compose build
+#docker build -t ${defaultTag} -f ${dockerfile} .
+docker-compose build
 
 print "++ Pushing ${reponame}:${branchname} to registry"
-docker push ${defaultTag}
+#docker push ${defaultTag}
+docker-compose push
 
 if [ "$tagLatest" != "no" ] ; then
    print "++ Pushing ${reponame}:latest to registry"
