@@ -9,7 +9,7 @@ const config = {
         protocol: 'http',
         server_port: 8000,
         database: {
-            host: '127.0.0.1',
+            host: 'mongo',
             port: 27017,
             db: 'skiLeasing',
             config: true,
