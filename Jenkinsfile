@@ -1,19 +1,13 @@
 pipeline {
-    agent none
+    agent { dockerfile: true }
     stages {
         stage('Lint') {
-            agent {
-                dockerfile: true
-            }   
             steps {
                 sh 'npm install'
                 sh 'npm run lint'
             }
         }
         stage('Build') {
-            agent {
-                dockerfile: true
-            }
             steps {
                 sh 'npm run build-ts '
             }
