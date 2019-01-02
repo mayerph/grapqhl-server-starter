@@ -38,6 +38,7 @@ latestTag="${host}/${reponame}:latest"
 
 print "++ Building docker container..."
 docker build -t ${defaultTag} -f ${dockerfile} .
+#docker-compose build
 
 print "++ Pushing ${reponame}:${branchname} to registry"
 docker push ${defaultTag}
