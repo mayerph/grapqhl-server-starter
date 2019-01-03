@@ -10,6 +10,7 @@ RUN apk add --no-cache --virtual .gyp python make g++
 RUN npm install
 RUN apk del .gyp
 
-ENTRYPOINT ["npm", "run", "build-ts"]
-CMD ["npm", "run", "start"]
+RUN npm run build-ts
+
+ENTRYPOINT ["npm", "run", "start"]
 EXPOSE 8000
