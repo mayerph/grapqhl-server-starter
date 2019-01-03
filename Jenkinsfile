@@ -12,7 +12,6 @@ pipeline {
                 sh 'apk add --no-cache --virtual .gyp python make g++'
                 sh 'npm install'
                 sh 'apk del .gyp'
-                sh 'echo hello world'
             }
         }
         stage('Build') {
@@ -29,6 +28,7 @@ pipeline {
             }
             steps {
                 sh "docker-build-and-push -b ${BRANCH_NAME}"
+                sh "echo ${BRANCH_NAME}"
             }
         }
     }
