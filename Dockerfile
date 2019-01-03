@@ -7,9 +7,9 @@ WORKDIR /app
 COPY . /app
 
 RUN apk add --no-cache --virtual .gyp python make g++
-RUN npm install -g mongodb
 RUN npm install
 RUN apk del .gyp
 
-#ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "build-ts"]
+CMD ["npm", "run", "start"]
 EXPOSE 8000
