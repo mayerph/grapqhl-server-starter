@@ -28,7 +28,6 @@ pipeline {
             }
             steps {
                 sh "docker-build-and-push -b ${BRANCH_NAME}"
-                sh "echo ${BRANCH_NAME}"
             }
         }
     }
