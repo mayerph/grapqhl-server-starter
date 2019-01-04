@@ -30,7 +30,7 @@ const config = {
             port: 27017,
             db: 'skiLeasing',
             config: true,
-            drop: false,
+            drop: true,
         },
     },
     staging: {
