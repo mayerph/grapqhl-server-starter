@@ -11,7 +11,10 @@ const uri: string =
 const db = {
     connect: async () => {
         try {
-            await mongoose.connect(uri)
+            await mongoose.connect(
+                uri,
+                { useNewUrlParser: true }
+            )
             if (global.gConfig.database.config) {
                 await dbConfig(global.gConfig.database.drop)
             }
