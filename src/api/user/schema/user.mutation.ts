@@ -1,13 +1,11 @@
 import { gql } from 'apollo-server-express'
 
 const userMutation = gql`
-    scalar Upload
-
     extend type Mutation {
         signUp(username: String!, email: String!, password: String!): Token!
         signIn(username: String!, password: String!): Token!
         deleteUser(id: ID!): Boolean!
-            @hasPermission(requiredPermission: deleteUser)
+            @hasPermission(requiredPermission: adminDefault)
 
         createUser(
             username: String!
@@ -15,7 +13,7 @@ const userMutation = gql`
             role: ID!
             password: String!
             img: Upload
-        ): User @hasPermission(requiredPermission: createUser)
+        ): User @hasPermission(requiredPermission: adminDefault)
         updateUser(
             id: ID!
             username: String
@@ -24,7 +22,7 @@ const userMutation = gql`
             role: ID
             img: Upload
             deleteImage: Boolean
-        ): User @hasPermission(requiredPermission: updateUser)
+        ): User @hasPermission(requiredPermission: adminDefault)
         updateMe(
             username: String
             password: String
