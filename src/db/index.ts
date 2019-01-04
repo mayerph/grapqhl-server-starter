@@ -8,7 +8,6 @@ mongo.on('connecting', () => {
 })
 
 mongo.on('error', error => {
-    console.error('Error in MongoDb connection: ' + error)
     mongoose.disconnect()
 })
 mongo.on('connected', () => {
@@ -22,7 +21,9 @@ mongo.on('reconnected', () => {
 })
 mongo.on('disconnected', () => {
     console.log('MongoDB disconnected!')
-    db.connect()
+    setTimeout(() => {
+        db.connect()
+    }, 5000)
 })
 
 const uri: string =
