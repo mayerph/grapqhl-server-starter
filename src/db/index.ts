@@ -1,6 +1,30 @@
 import mongoose from 'mongoose'
 import { dbConfig } from './db.config'
 
+const mongo = mongoose.connection
+
+mongo.on('connecting', () => {
+    console.log('connecting to MongoDB...')
+})
+
+mongo.on('error', error => {
+    console.error('Error in MongoDb connection: ' + error)
+    mongoose.disconnect()
+})
+mongo.on('connected', () => {
+    console.log('MongoDB connected!')
+})
+mongo.once('open', () => {
+    console.log('MongoDB connection opened!')
+})
+mongo.on('reconnected', () => {
+    console.log('MongoDB reconnected!')
+})
+mongo.on('disconnected', () => {
+    console.log('MongoDB disconnected!')
+    db.connect()
+})
+
 const uri: string =
     'mongodb://' +
     global.gConfig.database.host +
