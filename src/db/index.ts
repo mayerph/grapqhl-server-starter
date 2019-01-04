@@ -3,27 +3,8 @@ import { dbConfig } from './db.config'
 
 const mongo = mongoose.connection
 
-mongo.on('connecting', () => {
-    console.log('connecting to MongoDB...')
-})
-
-mongo.on('error', error => {
-    mongoose.disconnect()
-})
 mongo.on('connected', () => {
-    console.log('MongoDB connected!')
-})
-mongo.once('open', () => {
-    console.log('MongoDB connection opened!')
-})
-mongo.on('reconnected', () => {
-    console.log('MongoDB reconnected!')
-})
-mongo.on('disconnected', () => {
-    console.log('MongoDB disconnected!')
-    setTimeout(() => {
-        db.connect()
-    }, 5000)
+    console.log('connected to mongodb!')
 })
 
 const uri: string =
@@ -38,16 +19,19 @@ const db = {
         try {
             await mongoose.connect(
                 uri,
-                { useNewUrlParser: true }
+                { useNewUrlParser: true, useCreateIndex: true }
             )
             if (global.gConfig.database.config) {
                 await dbConfig(global.gConfig.database.drop)
             }
         } catch (err) {
-            throw new Error(
+            console.log(
                 'connection to mongodb failed. Please make sure mongodb is running. ' +
                     err
             )
+            setTimeout(() => {
+                db.connect()
+            }, 5000)
         }
     },
     disconnect: async () => {
