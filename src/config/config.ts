@@ -25,19 +25,22 @@ const config = {
     },
     testing: {
         id: 'testing',
+        production: {
+            id: 'production',
+            database: {
+                host: 'mongo',
+                port: 27017,
+                db: 'skiLeasing',
+                config: true,
+                drop: false,
+            },
+        },
     },
     staging: {
         id: 'staging',
     },
     production: {
         id: 'production',
-        database: {
-            host: 'mongo',
-            port: 27017,
-            db: 'skiLeasing',
-            config: true,
-            drop: false,
-        },
     },
 }
 
