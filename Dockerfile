@@ -13,4 +13,5 @@ RUN apk del .gyp
 RUN npm run build-ts
 
 ENTRYPOINT ["npm", "run", "start"]
+
 EXPOSE 8000
