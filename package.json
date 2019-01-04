@@ -32,7 +32,6 @@
         "@types/passport-jwt": "^3.0.1",
         "@types/passport-local": "^1.0.33",
         "graphql-resolvers": "^0.2.2",
-        "graphql-upload": "^8.0.2",
         "jest": "^23.6.0",
         "mongodb-memory-server": "^2.7.3",
         "nodemon": "^1.18.5",

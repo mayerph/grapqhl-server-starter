@@ -1,8 +1,8 @@
 // config
 import dotenv from 'dotenv'
-import { finalConfig } from './config/config'
-
 dotenv.config({ path: '.env' })
+
+import { finalConfig } from './config/config'
 global.gConfig = finalConfig
 
 // imports
