@@ -4,19 +4,17 @@ pipeline {
         stage('Lint') {
             agent {
                 docker { 
-                    image 'node:lts-alpine' 
+                    image 'obraun/node-jenkins:latest' 
                     args '-u root:root'
                 }
             }   
             steps {
-                sh 'apk add --no-cache --virtual .gyp python make g++'
-                sh 'npm install'
-                sh 'apk del .gyp'
+                sh 'echo hello world'
             }
         }
         stage('Build') {
             agent {
-                docker { image 'node:lts-alpine' }
+                docker { image 'obraun/node-jenkins:latest' }
             }
             steps {
                 sh 'npm run build-ts '
