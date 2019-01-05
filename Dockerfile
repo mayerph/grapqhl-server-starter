@@ -1,16 +1,17 @@
-FROM node:lts-alpine
+FROM obraun/node-jenkins as builder
+WORKDIR /app
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-ENV PATH=$PATH:/home/node/.npm-global/bin
+COPY . /app/.
+
+RUN npm install
+RUN npm run build-ts
+
+
+
+FROM node:alpine as app
 
 WORKDIR /app
-COPY . /app
-
-RUN apk add --no-cache --virtual .gyp python make g++
-RUN npm install
-RUN apk del .gyp
-
-RUN npm run build-ts
+COPY --from=builder /app/. /app/.
 
 ENTRYPOINT ["npm", "run", "start"]
 
