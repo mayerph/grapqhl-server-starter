@@ -41,7 +41,7 @@ const apollo = new ApolloServer({
         return createContext(userToken)
     },
     subscriptions: {
-        onConnect: async (connectionParams: any, webSocket, context) => {
+        onConnect: async (connectionParams: any) => {
             if (connectionParams.authentication) {
                 const userToken = connectionParams.authToken
                 return createContext(userToken)
