@@ -25,6 +25,7 @@ const config = {
     },
     testing: {
         id: 'testing',
+        server_port: 8000,
         database: {
             host: 'mongo',
             port: 27017,
