@@ -75,6 +75,7 @@ userSchema.pre<IUserMongoose>('save', async function save(next) {
 
 /**
  * checks if the passed password is equal to the password of the user object
+ * @param {string} candidatePassword - passed password
  */
 const comparePassword: comparePasswordFunction = async function(
     candidatePassword

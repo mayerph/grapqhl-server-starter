@@ -1,5 +1,9 @@
 import { PermissionController } from './permission.controller'
 
+/**
+ * Implementation of the GraphQL-Schema of the permission
+ * every resolver-functions calls a controller-function, which contains the specific logic
+ */
 const permissionResolver = {
     Query: {
         permissions: async (parent, args, context) => {

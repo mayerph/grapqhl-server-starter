@@ -10,6 +10,10 @@ const EVENTS = {
     },
 }
 
+/**
+ * Implementation of the GraphQL-Schema of the product
+ * every resolver-functions calls a controller-function, which contains the specific logic
+ */
 const productResolver = {
     Query: {
         products: async (parent, args, context) => {

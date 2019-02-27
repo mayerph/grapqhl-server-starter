@@ -10,6 +10,10 @@ const EVENTS = {
     },
 }
 
+/**
+ * Implementation of the GraphQL-Schema of the user
+ * every resolver-functions calls a controller-function, which contains the specific logic
+ */
 const userResolver = {
     Query: {
         users: async (parent, args, context) => {

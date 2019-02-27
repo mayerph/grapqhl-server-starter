@@ -1,6 +1,10 @@
 import { Topic } from './topic.model'
 import { TopicController } from './topic.controller'
 
+/**
+ * Implementation of the GraphQL-Schema of the topic
+ * every resolver-functions calls a controller-function, which contains the specific logic
+ */
 const topicResolver = {
     Query: {
         topics: async (parent, args, context) => {

@@ -1,6 +1,10 @@
 import { RoleController } from './role.controller'
 import { PermissionController } from '../permission/permission.controller'
 
+/**
+ * Implementation of the GraphQL-Schema of the role
+ * every resolver-functions calls a controller-function, which contains the specific logic
+ */
 const roleResolver = {
     Query: {
         roles: async (parent, args, context) => {
