@@ -1,5 +1,7 @@
-import { ITopic } from '../topic/topic.interface'
-
+/**
+ * interface of a product (schema)
+ * can be used to define non-static methods
+ */
 export interface IProduct {
     id?: any
     topic: any
@@ -12,4 +14,8 @@ export interface IProduct {
     img: any
 }
 
+/**
+ * interface of a product (model)
+ * can be used to define static methods
+ */
 export interface IProductModel {}

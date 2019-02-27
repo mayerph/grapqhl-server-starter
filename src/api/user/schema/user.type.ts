@@ -1,5 +1,8 @@
 import { gql } from 'apollo-server-express'
 
+/**
+ * GraphQL schema --> all types related to the user.
+ */
 const userType = gql`
     type Token {
         token: String!
@@ -14,5 +17,5 @@ const userType = gql`
         img: File
     }
 `
-// @hasPermission(requiredPermission: readPassword)
+
 export { userType }

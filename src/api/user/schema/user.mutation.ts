@@ -1,5 +1,8 @@
 import { gql } from 'apollo-server-express'
 
+/**
+ * GraphQL schema --> all mutations related to the user.
+ */
 const userMutation = gql`
     extend type Mutation {
         signUp(username: String!, email: String!, password: String!): Token!

@@ -1,5 +1,8 @@
 import { gql } from 'apollo-server-express'
 
+/**
+ * GraphQL schema --> all types related to a file.
+ */
 const fileType = gql`
     scalar Upload
 

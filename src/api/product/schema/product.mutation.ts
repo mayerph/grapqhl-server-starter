@@ -1,5 +1,8 @@
 import { gql } from 'apollo-server-express'
 
+/**
+ * GraphQL schema --> all mutations related to the product.
+ */
 const productMutation = gql`
     extend type Mutation {
         createProduct(

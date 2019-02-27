@@ -1,6 +1,9 @@
 import { IRole } from '../role/role.interface'
 
-// nicht-statische Eigenschaften und Methoden
+/**
+ * interface of an user (schema)
+ * can be used to define non-static methods
+ */
 export interface IUser {
     id?: any
     username: string
@@ -11,9 +14,15 @@ export interface IUser {
     img: any
 }
 
-// statische Methoden
+/**
+ * interface of an user (model)
+ * can be used to define static methods
+ */
 export interface IUserModel {}
 
+/**
+ * type of a function
+ */
 export type comparePasswordFunction = (
     candidatePassword: string
 ) => Promise<boolean>

@@ -5,14 +5,23 @@ import { Role } from '../role/role.model'
 const Schema = mongoose.Schema
 import { IUser, IUserModel, comparePasswordFunction } from './user.interface'
 
-// interface
+/**
+ * interface of the mongoose-schema
+ * can be used to define properties and non-static methods
+ */
 interface IUserMongoose extends IUser, mongoose.Document {}
 
-// interface für statische Methoden
+/**
+ * interface of the mongoose-model
+ * can be used defining static methods
+ */
 interface IUserModelMongoose
     extends mongoose.Model<IUserMongoose>,
         IUserModel {}
 
+/**
+ * mongoose-schema of a user
+ */
 const userSchema = new Schema({
     username: { type: String, unique: true, required: true, dropDups: true },
     password: {
@@ -37,6 +46,9 @@ const userSchema = new Schema({
     img: { type: Schema.Types.ObjectId, ref: 'File' },
 })
 
+/**
+ * hashes the password of a user on save
+ */
 userSchema.pre<IUserMongoose>('save', async function save(next) {
     const user = this
     if (!user.isModified('password')) {
@@ -49,6 +61,9 @@ userSchema.pre<IUserMongoose>('save', async function save(next) {
     }
 })
 
+/**
+ * adds default role to an user without a role on save
+ */
 userSchema.pre<IUserMongoose>('save', async function save(next) {
     const user = this
     if (!user.role) {
@@ -58,7 +73,9 @@ userSchema.pre<IUserMongoose>('save', async function save(next) {
     return next()
 })
 
-// methods
+/**
+ * checks if the passed password is equal to the password of the user object
+ */
 const comparePassword: comparePasswordFunction = async function(
     candidatePassword
 ) {
@@ -66,6 +83,9 @@ const comparePassword: comparePasswordFunction = async function(
 }
 userSchema.methods.comparePassword = comparePassword
 
+/**
+ * mongoose-model of a user
+ */
 const User = mongoose.model<IUserMongoose, IUserModelMongoose>(
     'User',
     userSchema
