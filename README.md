@@ -35,3 +35,21 @@ mongod
 npm run build
 npm start
 ```
+
+# Developing
+
+- Start your mongoDB server
+
+```
+mongod
+```
+
+- Recompile on save
+```
+npm run watch-ts
+```
+
+- Restart node on save
+```
+npm run watch-node
+```
