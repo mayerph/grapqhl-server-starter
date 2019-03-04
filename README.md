@@ -36,7 +36,7 @@ npm run build
 npm start
 ```
 
-# Developing
+## Developing
 
 - Start your mongoDB server
 
