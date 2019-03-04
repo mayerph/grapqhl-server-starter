@@ -13,5 +13,25 @@ To build and run this app locally you will need a few things:
 -   Clone the repository
 
 ```
-    git clone https://github.com/mayerph/grapqhl-server-starter.git
+git clone https://github.com/mayerph/grapqhl-server-starter.git
+```
+
+-   Install dependencies
+
+```
+cd <project_name>
+npm install
+```
+
+-   Start your mongoDB server
+
+```
+mongod
+```
+
+-   Build and run the project
+
+```
+npm run build
+npm start
 ```
