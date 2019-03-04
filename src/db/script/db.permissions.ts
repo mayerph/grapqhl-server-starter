@@ -1,9 +1,15 @@
 import { Permission } from '../../api/permission/permission.model'
 
+/**
+ * drops all permissions in the database.
+ */
 const dropPermissions = async () => {
     await Permission.deleteMany({})
 }
 
+/**
+ * creates default permissions in the database.
+ */
 const createPermissions = async () => {
     let adminDefaultPermission
     let readDefaultPermission

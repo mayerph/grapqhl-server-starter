@@ -1,9 +1,15 @@
 import { Topic } from '../../api/topic/topic.model'
 
+/**
+ * drops all topics in the database.
+ */
 const dropTopics = async () => {
     await Topic.deleteMany({})
 }
 
+/**
+ * creates the default topics in the database.
+ */
 const createTopics = async () => {
     let skiTopic
     let snowboardTopic

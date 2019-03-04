@@ -13,6 +13,10 @@ import {
     dropTopics,
 } from './script'
 
+/**
+ * creates and drops the default database entries.
+ * @param drop - drop database on server restart
+ */
 const dbConfig = async drop => {
     if (drop) {
         await dropUser()

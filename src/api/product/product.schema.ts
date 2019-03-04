@@ -5,6 +5,9 @@ import {
     productSubscription,
 } from './schema'
 
+/**
+ * merges all graphql schema entries of the product
+ */
 const productSchema = [
     productType,
     productQuery,

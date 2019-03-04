@@ -5,6 +5,9 @@ import { categoryResolver } from './category'
 import { productResolver } from './product'
 import { topicResolver } from './topic'
 
+/**
+ * merges all resolver.
+ */
 const resolvers = [
     userResolver,
     permissionResolver,

@@ -5,6 +5,9 @@ import {
     permissionEnum,
 } from './schema'
 
+/**
+ * merges all graphql schema entries of the permission
+ */
 const permissionSchema = [
     permissionType,
     permissionQuery,

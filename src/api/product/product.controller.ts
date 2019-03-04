@@ -5,16 +5,38 @@ import { TopicController } from '../topic/topic.controller'
 
 const pictureName = 'images/user/productImage'
 
+/**
+ * Implements all logic related to a product.
+ */
 const ProductController = {
+    /**
+     * returns all products in the database.
+     */
     products: async () => {
-        // await Product.deleteMany({})
         const products = await Product.find({})
         return products
     },
+
+    /**
+     * returns a specific permission by id.
+     * @param id - id of the permission
+     */
     product: async (id: string) => {
         const product = await Product.findById(id)
         return product
     },
+
+    /**
+     * creates a new permission.
+     * @param topicNames - topic of the product
+     * @param stock - stock of the product
+     * @param name - name of the product
+     * @param description - description of the product
+     * @param price - price of the product
+     * @param categories - categories of the product
+     * @param gender - gendering product
+     * @param productImage - image of the product
+     */
     createProduct: async (
         topicNames: string[],
         stock: number,
@@ -49,10 +71,26 @@ const ProductController = {
 
         return product
     },
+    /**
+     * deletes product by id.
+     * @param id of the product
+     */
     deleteProduct: async (id: string) => {
         await Product.remove({ _id: id })
         return true
     },
+    /**
+     * updates an existing product.
+     * @param id - id of the product
+     * @param topicNames - topic of the product
+     * @param stock - stock of the product
+     * @param name - name of the product
+     * @param description - description of the product
+     * @param price - price of the product
+     * @param categories - categories of the product
+     * @param gender - gendering product
+     * @param productImage - image of the product
+     */
     updateProduct: async (
         id: string,
         topicNames: string[],
@@ -82,7 +120,6 @@ const ProductController = {
             product.price = price
         }
         if (categories) {
-            // toDo
             product.categories = categories
         }
         if (gender) {
@@ -99,6 +136,10 @@ const ProductController = {
         await product.save()
         return product
     },
+    /**
+     * returns the categories of a product.
+     * @param categoryIds - ids of the categories
+     */
     categories: async (categoryIds: number[]) => {
         if (!categoryIds) {
             return null
@@ -110,10 +151,19 @@ const ProductController = {
         await Promise.all(categories)
         return categories
     },
+    /**
+     * returns the image a product.
+     * @param imgId - id of the image
+     */
     img: async (imgId: string) => {
         const img = await FileController.file(imgId)
         return img
     },
+
+    /**
+     * returns the topics of a product.
+     * @param topicIds - ids of the topics
+     */
     topic: async (topicIds: number[]) => {
         if (!topicIds) {
             return null
@@ -125,6 +175,10 @@ const ProductController = {
         await Promise.all(topics)
         return topics
     },
+    /**
+     * returns the topics by name.
+     * @param topicName - topic names
+     */
     topicByName: async (topicNames: string[]) => {
         if (!topicNames) {
             return null

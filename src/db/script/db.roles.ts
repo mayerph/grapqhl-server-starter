@@ -1,9 +1,16 @@
 import { Role } from '../../api/role/role.model'
 import { Permission } from '../../api/permission/permission.model'
 
+/**
+ * drops all roles in the database.
+ */
 const dropRoles = async () => {
     await Role.deleteMany({})
 }
+
+/**
+ * creates the default roles in the database.
+ */
 const createRoles = async () => {
     let adminRole
     let readerRole

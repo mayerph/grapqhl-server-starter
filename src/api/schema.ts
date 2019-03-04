@@ -9,6 +9,9 @@ import { gql } from 'apollo-server-express'
 import { productSchema } from './product'
 import { topicSchema } from './topic'
 
+/**
+ * entry point for the merge.
+ */
 const linkSchema = gql`
     type Query {
         _: Boolean
@@ -21,6 +24,9 @@ const linkSchema = gql`
     }
 `
 
+/**
+ * merges all schemes.
+ */
 const schemas = [linkSchema].concat(
     userSchema,
     authSchema,

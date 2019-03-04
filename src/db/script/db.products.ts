@@ -2,10 +2,16 @@ import { Product } from '../../api/product/product.model'
 import { Category } from '../../api/category/category.model'
 import { Topic } from '../../api/topic/topic.model'
 
+/**
+ * drops all products in the database.
+ */
 const dropProducts = async () => {
     await Product.deleteMany({})
 }
 
+/**
+ * creates the default products in the database.
+ */
 const createProducts = async () => {
     let skiProduct
     let snowboardProduct

@@ -1,9 +1,15 @@
 import { Category } from '../../api/category/category.model'
 
+/**
+ * drops all categories in the database.
+ */
 const dropCategories = async () => {
     await Category.deleteMany({})
 }
 
+/**
+ * creates default categories in the database.
+ */
 const createCategories = async () => {
     let skiCategory
     let snowboardCategory

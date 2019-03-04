@@ -1,10 +1,12 @@
 import User from '../../api/user/user.model'
 import { Role } from '../../api/role/role.model'
 
+// deletes all user in the database
 const dropUser = async () => {
     await User.deleteMany({})
 }
 
+// creates the default user in the database.
 const createUser = async () => {
     let admin
     let reader
