@@ -92,7 +92,7 @@ e.g. User (combines the interface, model, schema, resolver, ... of a User)
 - role = a certain kind of implementation
 e.g. interface
 
-- features-based directory = organizes all roles related to a feature
+- features-based directory = organizes all roles related to a feature. In this project all feature-based directories are located in the src/api directory
 
 #### Convention
 
@@ -105,8 +105,9 @@ e.g. interface
 For a full example have a look at following directory:
 src/api/User/
 
-### Project structure
-all feature-based directories are located in the src/api/ directory
+### Sample project structure
+All feature-based directories are located in the src/api/ directory. 
+In this project, it consists of following files and subdirectories:
 
 | Name | Description |
 | ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
@@ -118,3 +119,6 @@ all feature-based directories are located in the src/api/ directory
 | **src/api/\<feature>/\<feature>.resolver.ts**  | resolvers represent the implementation of the graphql-schema.                                   |
 | **src/api/\<feature>/\<feature>.schema.ts**    | merges the graphql schema entries for the feature-based directory                               |
 | **src/api/\<feature>/\<feature>.schemaDirectives.ts**    | merges the graphql schema entries for the feature-based directory                     |
+
+### Adding a new feature
+For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure
