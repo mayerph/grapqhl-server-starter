@@ -1,4 +1,4 @@
-# grapqhl-server-starter
+# graphql-server-starter
 
 # Pre-requirements
 
@@ -122,4 +122,4 @@ In this project, it consists of following files and subdirectories:
 
 
 ### Adding a new feature
-For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure
+For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure.
