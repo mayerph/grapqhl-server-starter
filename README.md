@@ -120,5 +120,6 @@ In this project, it consists of following files and subdirectories:
 | **src/api/\<feature>/\<feature>.schema.ts**    | merges the graphql schema entries for the feature-based directory                               |
 | **src/api/\<feature>/\<feature>.schemaDirectives.ts**    | merges the graphql schema entries for the feature-based directory                     |
 
+
 ### Adding a new feature
 For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure
