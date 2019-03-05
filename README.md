@@ -84,6 +84,30 @@ npm run watch-node
 
 
 ## Feature-based structure
+### Naming
+#### Definitions
+- feature = combines complementary implementations
+e.g. User (combines the interface, model, schema, resolver, ... of a User)
+
+- role = a certain kind of implementation
+e.g. interface
+
+- features-based directory = organizes all roles related to a feature
+
+#### Convention
+
+- files in feature-based directories
+
+```
+<feature>.<role>.ts
+```
+
+For a full example have a look at following directory:
+src/api/User/
+
+### Project structure
+all feature-based directories are located in the src/api/ directory
+
 | Name | Description |
 | ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
 | **src/api/\<feature>/schema**                  | contains all graphql-schema-entries for the feature-based directory                             |
@@ -94,19 +118,3 @@ npm run watch-node
 | **src/api/\<feature>/\<feature>.resolver.ts**  | resolvers represent the implementation of the graphql-schema.                                   |
 | **src/api/\<feature>/\<feature>.schema.ts**    | merges the graphql schema entries for the feature-based directory                               |
 | **src/api/\<feature>/\<feature>.schemaDirectives.ts**    | merges the graphql schema entries for the feature-based directory                     |
-
-## Naming
-### Definitions
-- feature = combines complementary implementations
-e.g. User (combines the interface, model, schema, resolver, ... of a User)
-
-- rule = a certain kind of implementation
-e.g. interface
-
-### Convention
-
-- files in feature-based directories
-
-```
-<feature>.<role>.ts
-```
