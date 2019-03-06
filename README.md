@@ -54,6 +54,9 @@ npm run watch-ts
 npm run watch-node
 ```
 
+- Test your GraphQL Queries with [apollo playground](http://localhost:8000/graphql)
+
+
 # Project
 ## General structure
 | Name | Description |
