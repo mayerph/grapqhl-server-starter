@@ -56,8 +56,25 @@ npm run watch-node
 
 - Test your GraphQL Queries with [apollo playground](http://localhost:8000/graphql)
 
+![apollo_playground_1](../assets/apollo_playground_1.png?raw=true)
+
 
 # Project
+## Default Application Data
+| User | Password | Description
+| ---------------------------------------------- | -----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| admin                                   | sterne123     | the user is assigned to all permissions
+| reader                                   | sterne123     | the user has only read permissions
+
+## Operations
+There are some operations, which need admin permissions. Therefore you have to signIn with the admin user and copy the the responded JSON Web Token in the http headers section.
+
+- Sign in
+![apollo_playground_2](../assets/apollo_playground_2.png?raw=true)
+
+- Executing an operation which requires admin permissions
+![apollo_playground_3](../assets/apollo_playground_3.png?raw=true)
+
 ## General structure
 | Name | Description |
 | ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
