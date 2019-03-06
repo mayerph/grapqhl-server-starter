@@ -131,7 +131,7 @@ In this project, it consists of following files and subdirectories:
 
 | Name | Description |
 | ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
-| **src/api/\<feature>/schema**                  | contains all graphql-schema-entries for the feature-based directory                             |
+| **src/api/\<feature>/schema**                  | contains all graphql-schema-entries for the feature-based directory. Foreach type (e.g. query) you have to create a separate file                           |
 | **src/api/\<feature>/schemaDirectives**        | contains the implementations of the graphql-schema-directives for the feature-based directory |
 | **src/api/\<feature>/\<feature>.controller.ts**| controllers implement the functions called by the resolvers                                     |
 | **src/api/\<feature>/\<feature>.interface.ts** | interface for the model, so the database layer can be switched                                 |
@@ -143,3 +143,27 @@ In this project, it consists of following files and subdirectories:
 
 ### Adding a new feature
 For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure.
+
+#### 1. Creating the feature-based directory
+```
+cd src/api
+mkdir user
+```
+
+##### 1.1 Adding all necessary files equal to the 
+```
+cd user
+mkdir user
+```
+
+#### 2. Creating the schema directory for the graphql Queries
+```
+cd user
+mkdir schema
+```
+
+#### 3. Creating a graphQL type representing the user
+```
+cd user
+mkdir schema
+```
