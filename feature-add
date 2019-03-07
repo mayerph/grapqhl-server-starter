@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 FEATURE=$1
 run=true
 while [ "$run" == "true" ]
