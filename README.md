@@ -119,7 +119,7 @@ e.g. User (combines the interface, model, schema, resolver, ... of a User)
 - role = a certain kind of implementation
 e.g. interface
 
-- features-based directory = organizes all roles related to a feature. In this project all feature-based directories are located in the src/api directory
+- features-based directory = organizes all roles related to a feature. In this project all feature-based directories are located in the [src/api](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api) directory
 
 #### Convention
 
@@ -157,7 +157,7 @@ For adding a new feature you have to create a new feature-based directory in the
 npm run feature <name of the feature>
 ```
 
-##### 2. add the graphql schema of the new feature to the schema.ts file
+##### 2. add the graphql schema of the new feature to the [schema.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/schema.ts) file
 ```javascript
 import { <feature>Resolver } from './<feature>'
 // e.g. import { userResolver } from './user'
@@ -169,7 +169,7 @@ const resolvers = [
 
 ```
 
-##### 3. add the graphql resolvers of the new feature to the resolver.ts file
+##### 3. add the graphql resolvers of the new feature to the [resolver.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/resolvers.ts) file
 ```javascript
 import { <feature>Schema } from './<feature>'
 // e.g. import { userSchema } from './user'
