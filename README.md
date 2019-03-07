@@ -58,6 +58,8 @@ npm run watch-node
 
 ![apollo_playground_1](../assets/apollo_playground_1.png?raw=true)
 
+- Adding a new feature. [click here](https://github.com/mayerph/grapqhl-server-starter/blob/master/README.md#adding-a-new-feature)
+
 
 # Project
 ## Default Application Data
