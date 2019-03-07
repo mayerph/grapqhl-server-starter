@@ -103,7 +103,12 @@ There are some operations, which need admin permissions. Therefore you have to s
 | **src/test**                                   | contains the unit-, e2e- and integration-tests                                                 |
 | **src/server.ts**                              | creates and starts the http-server with express                                                 |
 | **src/vendor.d.ts**                            | defines global variables                                                                       |
-
+| **template**                                   | contains the template files for adding a new feature. This directory is used by the feature-add shell script                                                                      |
+| **.dockerignore**                              | excludes files and directories from the docker build                                                                       |
+| **.env**                                       | defines the private key for creating a json web token                                                                      |
+| **.gitignore**                                 | specifies intentionally untracked files to ignore                                                                     |
+| **.prettierrc**                                | prettier is an opinionated code formatter. This file contains the config therefor                                                                      |
+| **docker-build-and-push**                      | shell script that manages the the docker build and the push to the docker repository                                                                      |
 
 ## Feature-based structure
 ### Naming
