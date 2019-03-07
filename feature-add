@@ -31,6 +31,7 @@ function createSchemaFiles {
         content=${content//$VAR/$FEATURE}
         content=${content//$VAR_UPPERCASE/$FEATURE_UPPERCASE}
         content=${content//$VAR_UPPERCASE_FULL/$FEATURE_UPPERCASE_FULL}
+        echo "$content" > ${featureFiles[${i}]}
     done
 }
 
