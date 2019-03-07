@@ -130,10 +130,10 @@ e.g. interface
 ```
 
 For a full example have a look at following directory:
-src/api/User/
+[src/api/User/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api/user)
 
 ### Sample project structure
-All feature-based directories are located in the src/api/ directory. 
+All feature-based directories are located in the [src/api/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api) directory. 
 In this project, it consists of following files and subdirectories:
 
 | Name | Description |
@@ -149,7 +149,7 @@ In this project, it consists of following files and subdirectories:
 
 
 ### Adding a new feature
-For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure. You can do this by using the shell script (feature-add) or manually.
+For adding a new feature you have to create a new feature-based directory in the [src/api/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api) directory including all files and directories equal to the sample project structure. You can do this by using the shell script (feature-add) or manually.
 
 #### script-based
 ##### 1. run the script
