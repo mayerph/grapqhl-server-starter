@@ -1,4 +1,5 @@
 # graphql-server-starter
+This projects implements a sample back-end system and demonstrates how you can implement modern web apps nowadays, by using state of the art technologies
 
 # Pre-requirements
 
