@@ -9,7 +9,10 @@ interface ITemplateModelMongoose
     extends mongoose.Model<ITemplateMongoose>,
         ITemplateModel {}
 
-const templateSchema = new Schema({})
+const templateSchema = new Schema({
+    name: { type: String, unique: true, required: true },
+    description: { type: String },
+})
 
 const Template = mongoose.model<ITemplateMongoose, ITemplateModelMongoose>(
     'Template',
