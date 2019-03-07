@@ -130,7 +130,7 @@ e.g. interface
 ```
 
 For a full example have a look at following directory:
-[src/api/User/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api/user)
+[src/api/user/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api/user)
 
 ### Sample project structure
 All feature-based directories are located in the [src/api/](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api) directory. 
