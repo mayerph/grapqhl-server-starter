@@ -142,28 +142,39 @@ In this project, it consists of following files and subdirectories:
 
 
 ### Adding a new feature
-For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure.
+For adding a new feature you have to create a new feature-based directory in the src/api/ directory including all files and directories equal to the sample project structure. You can do this by using the shell script (feature-add) or manually.
 
-#### 1. Creating the feature-based directory
+#### script-based
+##### 1. run the script
 ```
-cd src/api
-mkdir user
-```
-
-##### 1.1 Adding all necessary files equal to the 
-```
-cd user
-mkdir user
+npm run feature <name of the feature>
 ```
 
-#### 2. Creating the schema directory for the graphql Queries
-```
-cd user
-mkdir schema
+##### 2. add the graphql schema of the new feature to the schema.ts file
+```javascript
+import { <feature>Resolver } from './<feature>'
+// e.g. import { userResolver } from './user'
+
+const resolvers = [
+  <feature>Resolver
+  // e.g userResolver
+]
+
 ```
 
-#### 3. Creating a graphQL type representing the user
+##### 3. add the graphql resolvers of the new feature to the resolver.ts file
+```javascript
+import { <feature>Schema } from './<feature>'
+// e.g. import { userSchema } from './user'
+
+const schemas = [linkSchema].concat(
+  <feature>Schema
+  // e.g userSchema
+)
+
 ```
-cd user
-mkdir schema
-```
+
+#### manually
+create the files manually equal to the table above and execute step 2 and 3 of the script-based approach
+
+
