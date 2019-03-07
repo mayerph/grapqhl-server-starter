@@ -1,0 +1,119 @@
+#!/usr/bin/env zsh
+
+FEATURE=$1
+run=true
+while [ "$run" == "true" ]
+do
+if [ -z "$FEATURE" ]
+    then
+        echo "name of the feature: "
+        read FEATURE
+    else 
+        run=false
+    fi
+done
+
+
+FEATURE_UPPERCASE="$(tr '[:lower:]' '[:upper:]' <<< ${FEATURE:0:1})${FEATURE:1}"
+FEATURE_UPPERCASE_FULL="$(tr '[:lower:]' '[:upper:]' <<< ${FEATURE})"
+
+VAR="template"
+VAR_UPPERCASE="$(tr '[:lower:]' '[:upper:]' <<< ${VAR:0:1})${VAR:1}"
+VAR_UPPERCASE_FULL="$(tr '[:lower:]' '[:upper:]' <<< ${VAR})"
+
+APIDIR="./src/api/"
+TEMPLATEDIR="./"
+SCHEMA="schema/"
+
+function createSchemaFiles {
+    for i in ${!templateFiles[@]}; do
+        content=$(< ${templateFiles[${i}]})
+        content=${content//$VAR/$FEATURE}
+        content=${content//$VAR_UPPERCASE/$FEATURE_UPPERCASE}
+        content=${content//$VAR_UPPERCASE_FULL/$FEATURE_UPPERCASE_FULL}
+    done
+}
+
+function fileFunc {
+    local base
+    if [ "$3" == "-s" ]; 
+    then 
+        base="$SCHEMA"
+
+        local index="index.ts"
+        local mutation=".mutation.ts"
+        local query=".query.ts"
+        local subscription=".subscription.ts"
+        local type=".type.ts"
+    else
+        base=""
+
+        local index="index.ts"
+        local mutation=".controller.ts"
+        local query=".interface.ts"
+        local subscription=".model.ts"
+        local type=".resolver.ts"
+        local scheme=".schema.ts"
+    fi
+
+    local array1=($mutation $query $subscription $type $scheme)
+    local array1=("${array1[@]/#/$2}")
+    local array1=("${array1[@]/#/$base}")
+    local array1=("${array1[@]/#/$2/}")
+    local array1=("${array1[@]/#/$1}")
+
+    local array2=($index)
+    local array2=("${array2[@]/#/$base}")
+    local array2=("${array2[@]/#/$2/}")
+    local array2=("${array2[@]/#/$1}")
+    
+
+    local array3=("${array1[@]}" "${array2[@]}")
+    
+    schemaFiles=("${array3[@]}")
+}
+
+function baseFileFunc {
+    fileFunc $TEMPLATEDIR $VAR
+    templateFiles=("${schemaFiles[@]}")
+
+    fileFunc $APIDIR $FEATURE
+    featureFiles=("${schemaFiles[@]}")
+}
+
+function schemaFileFunc {
+    fileFunc $TEMPLATEDIR $VAR -s
+    templateFiles=("${schemaFiles[@]}")
+
+    fileFunc $APIDIR $FEATURE -s
+    featureFiles=("${schemaFiles[@]}")
+}
+
+function createFiles {
+    mkdir "$APIDIR$FEATURE"
+    mkdir "$APIDIR$FEATURE/$SCHEMA"
+
+    baseFileFunc
+    createSchemaFiles  
+
+    schemaFileFunc
+    createSchemaFiles 
+}
+
+function removeFiles {
+    rm -r "$APIDIR$FEATURE"
+}
+
+
+
+if [ -d "$APIDIR$FEATURE" ]; 
+then
+    read -n 1 -p "Feature already exists. Overwriting? (y/n) " overwriting
+    if [ "$overwriting" == "y" ];
+    then
+        removeFiles
+        createFiles    
+    fi
+else 
+    createFiles
+fi
