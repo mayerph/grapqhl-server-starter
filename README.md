@@ -56,6 +56,7 @@ npm run watch-node
 ```
 
 - Test your GraphQL Queries with [apollo playground](http://localhost:8000/graphql)
+- more Details [click here](https://github.com/mayerph/grapqhl-server-starter#operations)
 
 ![apollo_playground_1](../assets/apollo_playground_1.png?raw=true)
 
@@ -64,10 +65,32 @@ npm run watch-node
 
 # Project
 ## Default Application Data
+
+### Permissions
+| Name | Description |
+| ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
+| **adminDefault**                                    | default permission for administration                                                                          |
+| **readDefault**                                    | default permission for reading                                                                          |
+| **deleteUser**                                    | Ability to delete Users                                                                          |
+| **adminUser**                                    | Ability to administrate Users                                                                          |
+| **updateUser**                                    | Ability to update Users                                                                          |
+| **createUser**                                    | Ability to create Users                                                                          |
+| **deleteMessage**                                    | Ability to delete Messages                                                                          |
+| **updateMessage**                                    | Ability to update Messages                                                                          |
+| **createMessage**                                    | Ability to create Messages                                                                          |
+
+### Role
+| Name |  Permissions |
+| ---------------------------------------------- | -----------------------------------------------------------------------------------------------|
+| ADMIN                                   | adminDefault, readDefault, deleteUser, adminUser, updateUser, createUser, deleteUser, deleteMessage, updateMessage, createMessage     | 
+| READER                                  | readDefault     | 
+
+### User
 | User | Password | Description
 | ---------------------------------------------- | -----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | admin                                   | sterne123     | the user is assigned to all permissions
 | reader                                   | sterne123     | the user has only read permissions
+
 
 ## Operations
 There are some operations, which need admin permissions. Therefore you have to signIn with the admin user and copy the the responded JSON Web Token in the http headers section.
