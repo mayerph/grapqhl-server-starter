@@ -209,7 +209,7 @@ const schemas = [linkSchema].concat(
 create the files manually equal to the table above and execute step 2 and 3 of the script-based approach
 
 ### Protecting a graphql operation
-Protecting a graphql operation or a graphql schema field can be realized by using schema directives. Therese directives can be assigned to any graphql field.
+Protecting a graphql operation or a graphql schema field can be realized by using schema directives. These directives can be assigned to any graphql field.
 
 ```graphql
 const userMutation = gql`
@@ -227,8 +227,54 @@ Implementing this kind of protection you have to execute 2 steps.
 Add a new entry in the [src/api/auth/schema/auth.directive.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/auth/schema/auth.directive.ts) file
 ```javascript
 const authDirectives = gql`
-    directive @mySchemaDirective on FIELD | FIELD_DEFINITION
+    directive @mySample on FIELD | FIELD_DEFINITION
 `
 ```
 
+
 #### 2. Implementing the schema directives
+Foreach directive in the graphql schema you have to create a own class, that inherits from the SchemaDirectiveVisitor class of apollo. The file in which the class is implemented has to be placed in the [src/api/auth/schemaDirectives](https://github.com/mayerph/grapqhl-server-starter/tree/master/src/api/auth/schemaDirectives) directory. The Name has to be equal to the name of the directive (e.g. mySample.ts)
+Overwriting the visitFieldDefinition() method allows to assign the directive to each graphql schema entry (field). This method initializes the resolver function of the directive, when the graphql server is started.
+
+```javascript
+export class mySampleDirective extends SchemaDirectiveVisitor {
+    public visitFieldDefinition(field) {
+        const { resolve = defaultFieldResolver } = field
+
+        field.resolve = async (...args: any[]) => {
+            // here you have to implement the protection mechanisms
+            return resolve.apply(this, args)
+        }
+    }
+}
+```
+
+
+#### 3. Export the implementation
+Export the implementation in the [src/api/auth/schemaDirectives/index.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/auth/schemaDirectives/index.ts) file
+```javascript
+export { mySampleDirective } from './mySample'
+```
+
+
+#### 4. Extend the authSchemaDirective constant
+Extend the authSchemaDirective constant in the [src/api/auth/auth.schemaDirective.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/auth/auth.schemaDirective.ts) file
+```javascript
+const authSchemaDirective = {
+    // <name of the directive>: <name of the class>
+    mySample: mySampleDirective
+}
+```
+
+
+#### 5. Assign the directive to a graphql schema entry
+```javascript
+const userMutation = gql`
+    extend type Mutation {
+        deleteUser(id: ID!): Boolean!
+            @mySample
+    }`
+```
+
+
+
