@@ -62,6 +62,7 @@ npm run watch-node
 
 - Adding a new feature. [click here](https://github.com/mayerph/grapqhl-server-starter/blob/master/README.md#adding-a-new-feature)
 
+- Protecting a graphql operation. [click here](https://github.com/mayerph/grapqhl-server-starter#protecting-a-graphql-operation)
 
 # Project
 ## Default Application Data
