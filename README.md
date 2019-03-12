@@ -208,4 +208,27 @@ const schemas = [linkSchema].concat(
 #### manually
 create the files manually equal to the table above and execute step 2 and 3 of the script-based approach
 
+### Protecting a graphql operation
+Protecting a graphql operation or a graphql schema field can be realized by using schema directives. Therese directives can be assigned to any graphql field.
 
+```graphql
+const userMutation = gql`
+    extend type Mutation {
+        deleteUser(id: ID!): Boolean!
+            @hasPermission(requiredPermission: adminDefault)
+    }
+ }`
+```
+In this example the deleteUser operation is protected by the @hasPermission directive and the adminDefault permission. Only users with the "adminDefault" permission have access to the deleteUser operation.
+
+Implementing this kind of protection you have to execute 2 steps. 
+
+#### 1. Defining the directives in the graphql schema
+Add a new entry in the [src/api/auth/schema/auth.directive.ts](https://github.com/mayerph/grapqhl-server-starter/blob/master/src/api/auth/schema/auth.directive.ts) file
+```javascript
+const authDirectives = gql`
+    directive @mySchemaDirective on FIELD | FIELD_DEFINITION
+`
+```
+
+#### 2. Implementing the schema directives
