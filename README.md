@@ -20,7 +20,7 @@ git clone https://github.com/mayerph/grapqhl-server-starter.git
 -   Install dependencies
 
 ```
-cd <project_name>
+cd grapqhl-server-starter
 npm install
 ```
 
