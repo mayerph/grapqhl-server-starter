@@ -35,6 +35,7 @@
         "@types/passport-local": "^1.0.33",
         "graphql-resolvers": "^0.2.2",
         "apollo-server": "^2.1.0",
+        "apollo-server-express": "^2.1.0",
         "jest": "^23.6.0",
         "mongodb-memory-server": "^2.7.3",
         "nodemon": "^1.18.5",
