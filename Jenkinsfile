@@ -17,6 +17,7 @@ pipeline {
                 docker { image 'obraun/node-jenkins:latest' }
             }
             steps {
+                sh 'npm install'
                 sh 'npm run build-ts '
             }
         }
