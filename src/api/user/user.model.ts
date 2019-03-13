@@ -9,7 +9,7 @@ import { IUser, IUserModel, comparePasswordFunction } from './user.interface'
  * interface of the mongoose-schema
  * can be used to define properties and non-static methods
  */
-interface IUserMongoose extends IUser, mongoose.Document {}
+export interface IUserMongoose extends IUser, mongoose.Document {}
 
 /**
  * interface of the mongoose-model
