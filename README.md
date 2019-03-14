@@ -277,5 +277,7 @@ const userMutation = gql`
     }`
 ```
 
+#### 6. Further information
+Further information defining schema directives can be found on the [official apollo site](https://www.apollographql.com/docs/apollo-server/features/directives.html). 
 
 
