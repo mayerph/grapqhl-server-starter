@@ -51,9 +51,7 @@ const userResolver = {
             args: any,
             context: { auth: { me: IUser } }
         ): Promise<IUser> => {
-            const {
-                auth: { me },
-            } = { ...context }
+            const { auth: { me } = { me: null } } = { ...context }
             if (!me) {
                 throw new Error('the authentification failed')
             }

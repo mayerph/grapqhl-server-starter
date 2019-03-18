@@ -174,7 +174,7 @@ describe('[Query.me]', () => {
         expect(res.username).toBe('admin')
     })
 
-    it('throws error if context is null', async () => {
+    it('throws error if me property is null', async () => {
         UserController.user = jest.fn(
             async (id: string): Promise<IUser> => {
                 const user = mockUsers.find(e => {
@@ -185,7 +185,9 @@ describe('[Query.me]', () => {
         )
 
         try {
-            const res = await userResolver.Query.me(null, null, { auth: null })
+            const res = await userResolver.Query.me(null, null, {
+                auth: { me: null },
+            })
         } catch (e) {
             expect(e.message).toBe('the authentification failed')
         }
