@@ -1,6 +1,10 @@
 import { UserController } from './user.controller'
 import { FileController } from '../file/file.controller'
 import { pubsub } from '../app'
+import { IUser } from './user.interface'
+import { IToken } from '../token/token.interface'
+import { IFile, FileUpload } from '../file/file.interface'
+import { IRole } from '../role/role.interface'
 
 // constant for all user events
 const EVENTS = {
@@ -20,21 +24,39 @@ const userResolver = {
         /**
          * returns all users in the database.
          */
-        users: async (parent, args, context) => {
+        users: async () => {
             const users = await UserController.users()
             return users
         },
         /**
          * returns specific user by id.
          */
-        user: async (parent, { id }, context) => {
-            const user = await UserController.user(id)
-            return user
+        user: async (parent: any, args: { id: string }): Promise<IUser> => {
+            try {
+                const { id } = { ...args }
+                if (!id) {
+                    throw new Error('the id can’t be null')
+                }
+                const user = await UserController.user(id)
+                return user
+            } catch (e) {
+                throw e
+            }
         },
         /**
          * returns the user-information of the requesting user
          */
-        me: async (parent, args, { auth: { me } }) => {
+        me: async (
+            parent: any,
+            args: any,
+            context: { auth: { me: IUser } }
+        ): Promise<IUser> => {
+            const {
+                auth: { me },
+            } = { ...context }
+            if (!me) {
+                throw new Error('the authentification failed')
+            }
             const user = await UserController.user(me.id)
             return user
         },
@@ -44,7 +66,13 @@ const userResolver = {
         /**
          * processes a sign-up operation.
          */
-        signUp: async (parent, { username, email, password }, { token }) => {
+        signUp: async (
+            parent: any,
+            args: { username: string; email: string; password: string },
+            context: { token: string }
+        ): Promise<IToken> => {
+            const { username, email, password } = args
+            const { token } = context
             const { userToken, user } = await UserController.signUp(
                 username,
                 email,
@@ -60,7 +88,13 @@ const userResolver = {
         /**
          * processes a sign-in operation.
          */
-        signIn: async (parent, { username, password }, { token }) => {
+        signIn: async (
+            parent: any,
+            args: { username: string; password: string },
+            context: { token: string }
+        ): Promise<IToken> => {
+            const { username, password } = args
+            const { token } = context
             const userToken = await UserController.signIn(
                 username,
                 password,
@@ -71,7 +105,11 @@ const userResolver = {
         /**
          * deletes a specific user by id.
          */
-        deleteUser: async (parent, { id }, context) => {
+        deleteUser: async (
+            parent: any,
+            args: { id: string }
+        ): Promise<boolean> => {
+            const { id } = args
             const successful = await UserController.deleteUser(id)
             // triggers the userDeleted event and subscription
             await pubsub.publish(EVENTS.USER.DELETED, {
@@ -83,10 +121,16 @@ const userResolver = {
          * creates a new user.
          */
         createUser: async (
-            parent,
-            { username, email, password, role, img },
-            context
-        ) => {
+            parent: any,
+            args: {
+                username: string
+                email: string
+                password: string
+                role: string
+                img: FileUpload
+            }
+        ): Promise<IUser> => {
+            const { username, email, password, role, img } = args
             const user = await UserController.createUser(
                 username,
                 email,
@@ -105,10 +149,26 @@ const userResolver = {
          * updates an existing user.
          */
         updateUser: async (
-            parent,
-            { id, username, password, email, role, img, deleteImage },
-            context
-        ) => {
+            parent: any,
+            args: {
+                id: string
+                username: string
+                password: string
+                email: string
+                role: string
+                img: FileUpload
+                deleteImage: boolean
+            }
+        ): Promise<IUser> => {
+            const {
+                id,
+                username,
+                password,
+                email,
+                role,
+                img,
+                deleteImage,
+            } = args
             const user = await UserController.updateUser(
                 id,
                 username,
@@ -129,9 +189,24 @@ const userResolver = {
          */
         updateMe: async (
             parent,
-            { username, password, email, role, img, deleteImage },
-            { auth: { me } }
-        ) => {
+            args: {
+                username: string
+                password: string
+                email: string
+                role: string
+                img: FileUpload
+                deleteImage: boolean
+            },
+            context: {
+                auth: {
+                    me: IUser
+                }
+            }
+        ): Promise<IUser> => {
+            const { username, password, email, role, img, deleteImage } = args
+            const {
+                auth: { me },
+            } = context
             const user = await UserController.updateUser(
                 me.id,
                 username,
@@ -172,13 +247,13 @@ const userResolver = {
         /**
          * returns the role of a user.
          */
-        role: async (user, args, { models }) => {
+        role: async (user: IUser, args: any, context: any): Promise<IRole> => {
             return UserController.userRole(user)
         },
         /**
          * returns the image of user.
          */
-        img: async (user, args, { models }) => {
+        img: async (user: IUser, args: any, context: any): Promise<IFile> => {
             return FileController.file(user.img)
         },
     },

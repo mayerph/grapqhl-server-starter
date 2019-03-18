@@ -13,11 +13,12 @@ const UserController = {
     /**
      * returns all users in the database.
      */
-    users: async (): Promise<IUserMongoose[]> => {
+    users: async (): Promise<IUser[]> => {
         try {
             const users = await User.find({})
             return users
         } catch (e) {
+            const error = new Error('das ist ein test')
             throw e
         }
     },
@@ -25,13 +26,9 @@ const UserController = {
      * returns a specific user by id.
      * @param id - id of the user
      */
-    user: async (id: string): Promise<IUserMongoose> => {
-        try {
-            const user = await User.findById(id)
-            return user
-        } catch (e) {
-            throw e
-        }
+    user: async (id: string): Promise<IUser> => {
+        const user = await User.findById(id)
+        return user
     },
     /**
      * returns a user with all related properties.
