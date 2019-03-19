@@ -110,7 +110,7 @@ describe('[Query.user]', () => {
         try {
             const res = await userResolver.Query.user(null, null)
         } catch (e) {
-            expect(e.message).toBe('the id can’t be null')
+            expect(e.message).toBe('User`s id can`t be null')
         }
 
         //expect(res.username).toBe('admin')
@@ -184,13 +184,43 @@ describe('[Query.me]', () => {
             }
         )
 
-        try {
-            const res = await userResolver.Query.me(null, null, {
+        await expect(
+            userResolver.Query.me(null, null, {
                 auth: { me: null },
             })
-        } catch (e) {
-            expect(e.message).toBe('the authentification failed')
-        }
+        ).rejects.toThrowError('Authentication failed')
+    })
+
+    it('throws error if context is null', async () => {
+        UserController.user = jest.fn(
+            async (id: string): Promise<IUser> => {
+                const user = mockUsers.find(e => {
+                    return e.id === id
+                })
+                return user
+            }
+        )
+
+        await expect(
+            userResolver.Query.me(null, null, null)
+        ).rejects.toThrowError('Authentication failed')
+    })
+
+    it('throws error if auth is null', async () => {
+        UserController.user = jest.fn(
+            async (id: string): Promise<IUser> => {
+                const user = mockUsers.find(e => {
+                    return e.id === id
+                })
+                return user
+            }
+        )
+
+        await expect(
+            userResolver.Query.me(null, null, {
+                auth: null,
+            })
+        ).rejects.toThrowError('Authentication failed')
     })
 
     it('throws error if UserController throws error', async () => {
@@ -198,81 +228,113 @@ describe('[Query.me]', () => {
             throw new Error('es gab ein Fehler')
         })
 
-        try {
-            const res = await userResolver.Query.me(null, null, mockContext)
-        } catch (e) {
-            expect(e.message).toBe('es gab ein Fehler')
-        }
+        await expect(
+            userResolver.Query.me(null, null, mockContext)
+        ).rejects.toThrowError('es gab ein Fehler')
     })
 })
 
 describe('[Mutation.signUp]', () => {
     const mockContext = {
-        token: 'myToken',
+        token: {
+            secret: 'mySecret',
+            expiresIn: '10',
+        },
     }
-    const mockUsers: IUser[] = [
-        {
-            id: '1',
-            username: 'admin',
-            password: 'sterne123',
-            email: 'admin@hm.edu',
-            role: null,
-            comparePassword: null,
-            img: null,
-        },
-        {
-            id: '2',
-            username: 'reader',
-            password: 'sterne123',
-            email: 'reader@hm.edu',
-            role: null,
-            comparePassword: null,
-            img: null,
-        },
-        {
-            id: '3',
-            username: 'yoda',
-            password: 'sterne123',
-            email: 'yoda@hm.edu',
-            role: null,
-            comparePassword: null,
-            img: null,
-        },
-    ]
+
+    const mockUser = {
+        id: '1',
+        username: 'admin',
+        password: 'sterne123',
+        email: 'admin@hm.edu',
+        role: null,
+        comparePassword: null,
+        img: null,
+    }
 
     it('throws error if arguments are null', async () => {
-        UserController.user = jest.fn(() => {
-            throw new Error('es gab ein Fehler')
-        })
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
 
-        try {
-            const res = await userResolver.Mutation.signUp(
-                null,
-                null,
-                mockContext
-            )
-        } catch (e) {
-            expect(e.message).toBe(
-                "Cannot destructure property `username` of 'undefined' or 'null'."
-            )
-        }
+        await expect(
+            userResolver.Mutation.signUp(null, null, mockContext)
+        ).rejects.toThrowError('Credentials are missing!')
     })
 
     it('throws error if context is null', async () => {
-        UserController.user = jest.fn(() => {
-            throw new Error('es gab ein Fehler')
-        })
-
-        try {
-            const res = await userResolver.Mutation.signUp(
-                null,
-                null,
-                mockContext
-            )
-        } catch (e) {
-            expect(e.message).toBe(
-                "Cannot destructure property `username` of 'undefined' or 'null'."
-            )
+        const mockCredentials = {
+            username: 'admin',
+            email: 'admin@hm.edu',
+            password: 'sterne123',
         }
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
+
+        await expect(
+            userResolver.Mutation.signUp(null, mockCredentials, null)
+        ).rejects.toThrowError('JWT information are missing!')
+    })
+
+    it('throws error if username is null', async () => {
+        const mockCredentials = {
+            username: null,
+            email: 'admin@hm.edu',
+            password: 'sterne123',
+        }
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
+        await expect(
+            userResolver.Mutation.signUp(null, mockCredentials, mockContext)
+        ).rejects.toThrowError('Credentials are missing!')
+    })
+
+    it('throws error if email is null', async () => {
+        const mockCredentials = {
+            username: 'admin',
+            email: null,
+            password: 'sterne123',
+        }
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
+
+        await expect(
+            userResolver.Mutation.signUp(null, mockCredentials, mockContext)
+        ).rejects.toThrowError('Credentials are missing!')
+    })
+
+    it('throws error if password is null', async () => {
+        const mockCredentials = {
+            username: 'admin',
+            email: 'admin@hm.edu',
+            password: null,
+        }
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
+
+        await expect(
+            userResolver.Mutation.signUp(null, mockCredentials, mockContext)
+        ).rejects.toThrowError('Credentials are missing!')
+    })
+
+    it('username`s value is not null', async () => {
+        const mockCredentials = {
+            username: 'admin',
+            email: 'admin@hm.edu',
+            password: 'sterne123',
+        }
+        UserController.signUp = jest
+            .fn()
+            .mockReturnValue({ userToken: 'myToken', user: mockUser })
+        const res = await userResolver.Mutation.signUp(
+            null,
+            mockCredentials,
+            mockContext
+        )
+        //expect(r).toBe(mockCredentials.username)
     })
 })

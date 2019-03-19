@@ -60,7 +60,7 @@ const UserController = {
         username: string,
         email: string,
         password: string,
-        token: any
+        token: { secret: string; expiresIn: string }
     ): Promise<IUserToken> => {
         try {
             const user = new User({ username, email, password })

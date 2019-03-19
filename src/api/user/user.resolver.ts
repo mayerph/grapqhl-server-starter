@@ -15,6 +15,20 @@ const EVENTS = {
     },
 }
 
+// constant for all errors for the resolvers
+const ERRORS = {
+    CREDENTIALS: {
+        MISSING: new Error('Credentials are missing!'),
+    },
+    ID: {
+        MISSING: new Error('User`s id can`t be null'),
+    },
+    AUTH: {
+        NOUSER: new Error('Authentication failed'),
+        NOTOKEN: new Error('JWT information are missing!'),
+    },
+}
+
 /**
  * Implementation of the GraphQL-Schema of the user
  * every resolver-functions calls a controller-function, which contains the specific logic
@@ -32,16 +46,12 @@ const userResolver = {
          * returns specific user by id.
          */
         user: async (parent: any, args: { id: string }): Promise<IUser> => {
-            try {
-                const { id } = { ...args }
-                if (!id) {
-                    throw new Error('the id can’t be null')
-                }
-                const user = await UserController.user(id)
-                return user
-            } catch (e) {
-                throw e
+            const { id } = { ...args }
+            if (!id) {
+                throw ERRORS.ID.MISSING
             }
+            const user = await UserController.user(id)
+            return user
         },
         /**
          * returns the user-information of the requesting user
@@ -51,9 +61,10 @@ const userResolver = {
             args: any,
             context: { auth: { me: IUser } }
         ): Promise<IUser> => {
-            const { auth: { me } = { me: null } } = { ...context }
+            const { auth } = { ...context }
+            const { me } = { ...auth }
             if (!me) {
-                throw new Error('the authentification failed')
+                throw ERRORS.AUTH.NOUSER
             }
             const user = await UserController.user(me.id)
             return user
@@ -67,10 +78,19 @@ const userResolver = {
         signUp: async (
             parent: any,
             args: { username: string; email: string; password: string },
-            context: { token: string }
+            context: { token: { secret: string; expiresIn: string } }
         ): Promise<IToken> => {
-            const { username, email, password } = args
-            const { token } = context
+            const { username = null, email = null, password = null } = {
+                ...args,
+            }
+            if (!username || !email || !password) {
+                throw ERRORS.CREDENTIALS.MISSING
+            }
+
+            const { token = null } = { ...context }
+            if (!token) {
+                throw ERRORS.AUTH.NOTOKEN
+            }
             const { userToken, user } = await UserController.signUp(
                 username,
                 email,
@@ -91,8 +111,15 @@ const userResolver = {
             args: { username: string; password: string },
             context: { token: string }
         ): Promise<IToken> => {
-            const { username, password } = args
-            const { token } = context
+            const { username = null, password = null } = { ...args }
+            if (!username || !password) {
+                throw ERRORS.CREDENTIALS.MISSING
+            }
+
+            const { token = null } = { ...context }
+            if (!token) {
+                throw ERRORS.AUTH.NOTOKEN
+            }
             const userToken = await UserController.signIn(
                 username,
                 password,
@@ -107,7 +134,10 @@ const userResolver = {
             parent: any,
             args: { id: string }
         ): Promise<boolean> => {
-            const { id } = args
+            const { id } = { ...args }
+            if (!id) {
+                throw ERRORS.ID.MISSING
+            }
             const successful = await UserController.deleteUser(id)
             // triggers the userDeleted event and subscription
             await pubsub.publish(EVENTS.USER.DELETED, {
@@ -128,7 +158,7 @@ const userResolver = {
                 img: FileUpload
             }
         ): Promise<IUser> => {
-            const { username, email, password, role, img } = args
+            const { username, email, password, role, img } = { ...args }
             const user = await UserController.createUser(
                 username,
                 email,
