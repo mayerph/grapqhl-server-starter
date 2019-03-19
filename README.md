@@ -6,7 +6,8 @@ This projects implements a sample back-end system and demonstrates how you can i
 To build and run this app locally you will need a few things:
 
 -   Install [Node.js](https://nodejs.org/en/)
--   Install [MongoDB](https://docs.mongodb.com/manual/installation/)
+-   Install [MongoDB](https://docs.mongodb.com/manual/installation/)</br>Alternative: Use Docker. 
+
 -   Install [VS Code](https://code.visualstudio.com/)
 
 # Getting started
@@ -29,6 +30,10 @@ npm install
 ```
 mongod
 ```
+or 
+```
+docker run -p 27017:27017 mongo
+```
 
 -   Build and run the project
 
@@ -43,6 +48,10 @@ npm start
 
 ```
 mongod
+```
+or 
+```
+docker run -p 27017:27017 mongo
 ```
 
 - Recompile on save
