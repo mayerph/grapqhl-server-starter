@@ -9,6 +9,31 @@ import { IUser } from './user.interface'
 
 const pictureName = 'images/user/userImage'
 
+// constant for all errors for the resolvers
+const ERRORS = {
+    CREDENTIALS: {
+        MISSING: new Error('Credentials are missing!'),
+    },
+    USER: {
+        OBJECT: new Error('User object is missing!'),
+        ID: {
+            MISSING: new Error('User`s id can`t be null'),
+        },
+    },
+    AUTH: {
+        NOUSER: new Error('Authentication failed'),
+        NOTOKEN: new Error('JWT information are missing!'),
+    },
+    DB: {
+        USERS: {
+            QUERY: new Error('Error occured during users query'),
+        },
+        USER: {
+            QUERY: new Error('Error occured during user query'),
+        },
+    },
+}
+
 const UserController = {
     /**
      * returns all users in the database.
@@ -18,8 +43,7 @@ const UserController = {
             const users = await User.find({})
             return users
         } catch (e) {
-            const error = new Error('das ist ein test')
-            throw e
+            throw ERRORS.DB.USERS
         }
     },
     /**
@@ -27,14 +51,24 @@ const UserController = {
      * @param id - id of the user
      */
     user: async (id: string): Promise<IUser> => {
-        const user = await User.findById(id)
-        return user
+        if (!id) {
+            throw ERRORS.USER.ID
+        }
+        try {
+            const user = await User.findById(id)
+            return user
+        } catch (e) {
+            throw ERRORS.DB.USER.QUERY
+        }
     },
     /**
      * returns a user with all related properties.
      * @param id - id of the user
      */
     fullUser: async (id: string): Promise<IUserMongoose> => {
+        if (!id) {
+            throw ERRORS.USER.ID
+        }
         try {
             const user = await User.findById(id).populate({
                 path: 'role',
@@ -46,7 +80,7 @@ const UserController = {
             })
             return user
         } catch (e) {
-            throw e
+            throw ERRORS.DB.USER.QUERY
         }
     },
     /**
@@ -62,22 +96,28 @@ const UserController = {
         password: string,
         token: { secret: string; expiresIn: string }
     ): Promise<IUserToken> => {
-        try {
-            const user = new User({ username, email, password })
-            await user.save()
-            const fullUser = await UserController.fullUser(user.id)
-            return {
-                userToken: {
-                    token: AuthController.createToken(
-                        fullUser.toJSON(),
-                        token.secret,
-                        token.expiresIn
-                    ),
-                },
-                user,
-            }
-        } catch (e) {
-            throw e
+        const { secret, expiresIn } = { ...token }
+        if (!username || !email || !password) {
+            throw ERRORS.CREDENTIALS.MISSING
+        }
+
+        if (!secret || !expiresIn) {
+            throw ERRORS.AUTH.NOTOKEN
+        }
+
+        const user = new User({ username, email, password })
+        await user.save()
+
+        const fullUser = await UserController.fullUser(user.id)
+        return {
+            userToken: {
+                token: AuthController.createToken(
+                    fullUser.toJSON(),
+                    secret,
+                    expiresIn
+                ),
+            },
+            user,
         }
     },
     /**
@@ -250,4 +290,4 @@ const UserController = {
     },
 }
 
-export { UserController }
+export { UserController, ERRORS }

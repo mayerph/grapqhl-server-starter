@@ -7,6 +7,7 @@
     ],
     "jsRules": {},
     "rules": {
+        "no-namespace": false,
         "ordered-imports": false,
         "member-ordering": false,
         "object-literal-sort-keys": false,

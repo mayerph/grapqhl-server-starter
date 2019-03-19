@@ -1,7 +1,6 @@
 import { userResolver } from './user.resolver'
 import { UserController } from './user.controller'
 import { IUser } from './user.interface'
-import { isNull } from 'util'
 
 describe('[Query.users]', () => {
     const mockUsers: IUser[] = [
@@ -112,6 +111,23 @@ describe('[Query.user]', () => {
         } catch (e) {
             expect(e.message).toBe('User`s id can`t be null')
         }
+
+        //expect(res.username).toBe('admin')
+    })
+
+    it('throws error if id is null', async () => {
+        UserController.user = jest.fn(
+            async (id: string): Promise<IUser> => {
+                const user = mockUsers.find(e => {
+                    return e.id === id
+                })
+                return user
+            }
+        )
+
+        await expect(
+            userResolver.Query.user(null, { id: null })
+        ).rejects.toThrowError('User`s id can`t be null')
 
         //expect(res.username).toBe('admin')
     })
@@ -320,21 +336,39 @@ describe('[Mutation.signUp]', () => {
             userResolver.Mutation.signUp(null, mockCredentials, mockContext)
         ).rejects.toThrowError('Credentials are missing!')
     })
+})
 
-    it('username`s value is not null', async () => {
-        const mockCredentials = {
-            username: 'admin',
-            email: 'admin@hm.edu',
-            password: 'sterne123',
-        }
-        UserController.signUp = jest
-            .fn()
-            .mockReturnValue({ userToken: 'myToken', user: mockUser })
-        const res = await userResolver.Mutation.signUp(
-            null,
-            mockCredentials,
-            mockContext
-        )
-        //expect(r).toBe(mockCredentials.username)
+describe('[Mutation.updateUser]', () => {
+    const mockContext = {
+        token: {
+            secret: 'mySecret',
+            expiresIn: '10',
+        },
+    }
+
+    const mockArgs = {
+        id: '1',
+        username: null,
+        email: 'admin@hm.edu',
+        role: null,
+        img: null,
+        deleteImage: null,
+    }
+
+    const mockUser = {
+        id: '1',
+        username: 'admin',
+        password: 'sterne123',
+        email: 'admin@hm.edu',
+        role: null,
+        comparePassword: null,
+        img: null,
+    }
+
+    it('throws error if arguments are null', async () => {
+        UserController.updateUser = jest.fn().mockReturnValue(mockUser)
+
+        const res = await userResolver.Mutation.updateUser(null, mockArgs)
+        expect(res.username).toBe('admin')
     })
 })
