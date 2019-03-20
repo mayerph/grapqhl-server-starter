@@ -6,7 +6,7 @@ import { Topic } from '../../api/topic/topic.model'
  * drops all products in the database.
  */
 const dropProducts = async () => {
-    await Product.deleteMany({})
+    await Product.deleteMany({}).exec()
 }
 
 /**
@@ -17,13 +17,13 @@ const createProducts = async () => {
     let snowboardProduct
     let skiShoeProduct
 
-    skiProduct = await Product.findOne({ name: 'ground ski' })
+    skiProduct = await Product.findOne({ name: 'ground ski' }).exec()
     if (!skiProduct) {
         // category
-        const skiCategory = await Category.findOne({ name: 'ski' })
+        const skiCategory = await Category.findOne({ name: 'ski' }).exec()
 
         // topic
-        const skiTopic = await Topic.findOne({ name: 'ski' })
+        const skiTopic = await Topic.findOne({ name: 'ski' }).exec()
 
         skiProduct = new Product({
             topic: [skiTopic],
@@ -36,13 +36,17 @@ const createProducts = async () => {
         skiProduct.save()
     }
 
-    snowboardProduct = await Product.findOne({ name: 'ground snowboard' })
+    snowboardProduct = await Product.findOne({
+        name: 'ground snowboard',
+    }).exec()
     if (!snowboardProduct) {
         // category
-        const snowboardCategory = await Category.findOne({ name: 'snowboard' })
+        const snowboardCategory = await Category.findOne({
+            name: 'snowboard',
+        }).exec()
 
         // topic
-        const snowboardTopic = await Topic.findOne({ name: 'snowboard' })
+        const snowboardTopic = await Topic.findOne({ name: 'snowboard' }).exec()
 
         snowboardProduct = new Product({
             topic: [snowboardTopic],
@@ -55,14 +59,16 @@ const createProducts = async () => {
         snowboardProduct.save()
     }
 
-    skiShoeProduct = await Product.findOne({ name: 'ski-shoe' })
+    skiShoeProduct = await Product.findOne({ name: 'ski-shoe' }).exec()
     if (!skiShoeProduct) {
         // categories
-        const skiCategory = await Category.findOne({ name: 'ski' })
-        const equipmentCategory = await Category.findOne({ name: 'equipment' })
+        const skiCategory = await Category.findOne({ name: 'ski' }).exec()
+        const equipmentCategory = await Category.findOne({
+            name: 'equipment',
+        }).exec()
 
         // topic
-        const skiTopic = await Topic.findOne({ name: 'ski' })
+        const skiTopic = await Topic.findOne({ name: 'ski' }).exec()
         skiShoeProduct = new Product({
             topic: [skiTopic],
             name: 'ski-shoe',

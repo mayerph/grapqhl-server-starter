@@ -67,7 +67,7 @@ userSchema.pre<IUserMongoose>('save', async function save(next) {
 userSchema.pre<IUserMongoose>('save', async function save(next) {
     const user = this
     if (!user.role) {
-        const role = await Role.findOne({ name: 'READER' })
+        const role = await Role.findOne({ name: 'READER' }).exec()
         user.role = role
     }
     return next()

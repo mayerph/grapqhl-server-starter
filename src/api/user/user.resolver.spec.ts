@@ -93,7 +93,7 @@ describe('[Query.user]', () => {
                 throw new Error()
             }
         )
-        //const res = await userResolver.Query.user(null, { id: '1' })
+        // const res = await userResolver.Query.user(null, { id: '1' })
         await expect(userResolver.Query.user(null, null)).rejects.toThrow()
     })
 
@@ -112,7 +112,7 @@ describe('[Query.user]', () => {
             expect(e.message).toBe('User`s id can`t be null')
         }
 
-        //expect(res.username).toBe('admin')
+        // expect(res.username).toBe('admin')
     })
 
     it('throws error if id is null', async () => {
@@ -129,7 +129,7 @@ describe('[Query.user]', () => {
             userResolver.Query.user(null, { id: null })
         ).rejects.toThrowError('User`s id can`t be null')
 
-        //expect(res.username).toBe('admin')
+        // expect(res.username).toBe('admin')
     })
 })
 

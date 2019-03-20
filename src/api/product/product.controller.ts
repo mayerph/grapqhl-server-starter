@@ -13,7 +13,7 @@ const ProductController = {
      * returns all products in the database.
      */
     products: async () => {
-        const products = await Product.find({})
+        const products = await Product.find({}).exec()
         return products
     },
 
@@ -22,7 +22,7 @@ const ProductController = {
      * @param id - id of the permission
      */
     product: async (id: string) => {
-        const product = await Product.findById(id)
+        const product = await Product.findById(id).exec()
         return product
     },
 
@@ -76,7 +76,7 @@ const ProductController = {
      * @param id of the product
      */
     deleteProduct: async (id: string) => {
-        await Product.remove({ _id: id })
+        await Product.remove({ _id: id }).exec()
         return true
     },
     /**
@@ -102,7 +102,7 @@ const ProductController = {
         gender: string,
         productImage: any
     ) => {
-        const product = await Product.findById(id)
+        const product = await Product.findById(id).exec()
         if (topicNames) {
             const topic = ProductController.topicByName(topicNames)
             product.topic = topic

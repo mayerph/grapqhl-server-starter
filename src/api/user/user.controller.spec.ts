@@ -37,6 +37,6 @@ describe('[UserController.users]', () => {
         User.find = jest.fn(() => {
             throw new Error('something went wrong')
         })
-        //await expect(UserController.users()).rejects.toThrow()
+        // await expect(UserController.users()).rejects.toThrow()
     })
 })

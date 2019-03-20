@@ -8,7 +8,7 @@ const RoleController = {
      * returns all roles in the database.
      */
     roles: async () => {
-        const roles = await Role.find({})
+        const roles = await Role.find({}).exec()
         return roles
     },
     /**
@@ -16,7 +16,7 @@ const RoleController = {
      * @param id - id of the role
      */
     role: async (id: string) => {
-        const role = await Role.findById(id)
+        const role = await Role.findById(id).exec()
         return role
     },
     /**
@@ -24,7 +24,7 @@ const RoleController = {
      * @param permission - permission
      */
     rolesByPermission: async (permission: string) => {
-        const roles = await Role.find({ permissions: permission })
+        const roles = await Role.find({ permissions: permission }).exec()
         return roles
     },
     /**
@@ -45,7 +45,7 @@ const RoleController = {
      * @param permissions - permissions related to the role
      */
     updateRole: async (id, name, permissions) => {
-        const role = await Role.findById(id)
+        const role = await Role.findById(id).exec()
         if (name) {
             role.name = name
         }
@@ -60,7 +60,7 @@ const RoleController = {
      * @param id - id of the role
      */
     deleteRole: async (id: string) => {
-        await Role.remove({ _id: id })
+        await Role.remove({ _id: id }).exec()
         return true
     },
     /**

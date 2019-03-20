@@ -89,7 +89,7 @@ const FileController = {
      * @param id - id of file
      */
     file: async id => {
-        const file = await File.findById(id)
+        const file = await File.findById(id).exec()
         return file
     },
 }

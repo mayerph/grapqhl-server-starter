@@ -12,7 +12,7 @@
         "watch-ts": "tsc -w",
         "test": "jest",
         "feature": "sh feature-add",
-        "lint": "tslint src/**"
+        "lint": "tslint --project tsconfig.json"
     },
     "repository": {
         "type": "git",

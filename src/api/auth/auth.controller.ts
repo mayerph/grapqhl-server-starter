@@ -13,7 +13,7 @@ const AuthController = {
      * @param {string} expiresIn - valid time of the token.
      */
     createToken: async (user: IUser, secret: string, expiresIn: string) => {
-        const token = await jwt.sign(user, secret, { expiresIn })
+        const token = jwt.sign(user, secret, { expiresIn })
         return token
     },
 
@@ -23,7 +23,7 @@ const AuthController = {
      */
     verifyToken: async (userToken: string) => {
         try {
-            return await jwt.verify(userToken, process.env.SECRET)
+            return jwt.verify(userToken, process.env.SECRET)
         } catch (e) {
             throw new Error('session expired')
         }

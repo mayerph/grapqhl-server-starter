@@ -40,7 +40,7 @@ const UserController = {
      */
     users: async (): Promise<IUser[]> => {
         try {
-            const users = await User.find({})
+            const users = await User.find({}).exec()
             return users
         } catch (e) {
             throw ERRORS.DB.USERS
@@ -55,7 +55,7 @@ const UserController = {
             throw ERRORS.USER.ID
         }
         try {
-            const user = await User.findById(id)
+            const user = await User.findById(id).exec()
             return user
         } catch (e) {
             throw ERRORS.DB.USER.QUERY
@@ -70,14 +70,16 @@ const UserController = {
             throw ERRORS.USER.ID
         }
         try {
-            const user = await User.findById(id).populate({
-                path: 'role',
-                populate: [
-                    {
-                        path: 'permissions',
-                    },
-                ],
-            })
+            const user = await User.findById(id)
+                .populate({
+                    path: 'role',
+                    populate: [
+                        {
+                            path: 'permissions',
+                        },
+                    ],
+                })
+                .exec()
             return user
         } catch (e) {
             throw ERRORS.DB.USER.QUERY
@@ -132,7 +134,7 @@ const UserController = {
         token: any
     ): Promise<IToken> => {
         try {
-            const user = await User.findOne({ username })
+            const user = await User.findOne({ username }).exec()
 
             if (!user) {
                 throw new Error('No user found with this login credentials.')
@@ -161,7 +163,7 @@ const UserController = {
      */
     deleteUser: async (id: string): Promise<boolean> => {
         try {
-            await User.deleteOne({ _id: id })
+            await User.deleteOne({ _id: id }).exec()
             return true
         } catch (e) {
             const error = new Error('user not found')
@@ -228,7 +230,7 @@ const UserController = {
             const user = await User.findOne({
                 messages: messageId,
                 _id: userId,
-            })
+            }).exec()
             return user
         } catch (e) {
             throw e
@@ -254,7 +256,7 @@ const UserController = {
         deleteImage: boolean
     ): Promise<IUser> => {
         try {
-            const user = await User.findById(id)
+            const user = await User.findById(id).exec()
             if (username) {
                 user.username = username
             }

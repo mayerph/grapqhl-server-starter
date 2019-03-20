@@ -9,7 +9,7 @@ const TopicController = {
      * returns all topics in the database.
      */
     topics: async () => {
-        const topics = await Topic.find({})
+        const topics = await Topic.find({}).exec()
         return topics
     },
     /**
@@ -17,7 +17,7 @@ const TopicController = {
      * @param id - id of a topic
      */
     topic: async (id: string) => {
-        const topic = await Topic.findById(id)
+        const topic = await Topic.findById(id).exec()
         return topic
     },
     /**
@@ -25,7 +25,7 @@ const TopicController = {
      * @param name - name of the topic
      */
     topicByName: async (name: string) => {
-        const topic = await Topic.findOne({ name })
+        const topic = await Topic.findOne({ name }).exec()
         return topic
     },
     /**
@@ -48,7 +48,7 @@ const TopicController = {
      * @param id - id of topic
      */
     deleteTopic: async (id: string) => {
-        await Topic.remove({ _id: id })
+        await Topic.remove({ _id: id }).exec()
         return true
     },
     /**
@@ -58,7 +58,7 @@ const TopicController = {
      * @param description - description of the topic
      */
     updateTopic: async (id: string, name: string, description: string) => {
-        const topic = await Topic.findById(id)
+        const topic = await Topic.findById(id).exec()
         if (name) {
             topic.name = name
         }
@@ -73,7 +73,7 @@ const TopicController = {
      * @param id - id of the topic
      */
     products: async (id: string) => {
-        const products = await Product.find({ topics: id })
+        const products = await Product.find({ topics: id }).exec()
         return products
     },
 }

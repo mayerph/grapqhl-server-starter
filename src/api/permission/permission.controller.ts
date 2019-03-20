@@ -9,7 +9,7 @@ const PermissionController = {
      * returns all permissions in the database.
      */
     permissions: async () => {
-        const permissions = await Permission.find({})
+        const permissions = await Permission.find({}).exec()
         return permissions
     },
     /**
@@ -17,7 +17,7 @@ const PermissionController = {
      * @param id - id of the permission
      */
     permission: async (id: string) => {
-        const permission = await Permission.findById(id)
+        const permission = await Permission.findById(id).exec()
         return permission
     },
     /**
@@ -38,7 +38,7 @@ const PermissionController = {
      * @param description - updated description of the permission
      */
     updatePermission: async (id: string, name: string, description: string) => {
-        const permission = await Permission.findById(id)
+        const permission = await Permission.findById(id).exec()
         if (permission) {
             if (name) {
                 permission.name = name
@@ -64,7 +64,7 @@ const PermissionController = {
                 'Permission can not be deleted. There exists a relation to a role.'
             )
         } else {
-            await Permission.remove({ _id: id })
+            await Permission.remove({ _id: id }).exec()
         }
 
         return true
