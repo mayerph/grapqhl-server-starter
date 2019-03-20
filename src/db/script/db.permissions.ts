@@ -4,7 +4,7 @@ import { Permission } from '../../api/permission/permission.model'
  * drops all permissions in the database.
  */
 const dropPermissions = async () => {
-    await Permission.deleteMany({})
+    await Permission.deleteMany({}).exec()
 }
 
 /**
@@ -21,7 +21,9 @@ const createPermissions = async () => {
     let updateMessagePermission
     let createMessagePermission
 
-    adminDefaultPermission = await Permission.findOne({ name: 'adminDefault' })
+    adminDefaultPermission = await Permission.findOne({
+        name: 'adminDefault',
+    }).exec()
     if (!adminDefaultPermission) {
         adminDefaultPermission = new Permission({
             name: 'adminDefault',
@@ -32,7 +34,7 @@ const createPermissions = async () => {
 
     readDefaultPermission = await Permission.findOne({
         name: 'readDefault',
-    })
+    }).exec()
     if (!readDefaultPermission) {
         readDefaultPermission = new Permission({
             name: 'readDefault',
@@ -41,7 +43,9 @@ const createPermissions = async () => {
         readDefaultPermission.save()
     }
 
-    deleteUserPermission = await Permission.findOne({ name: 'deleteUser' })
+    deleteUserPermission = await Permission.findOne({
+        name: 'deleteUser',
+    }).exec()
     if (!deleteUserPermission) {
         deleteUserPermission = new Permission({
             name: 'deleteUser',
@@ -50,7 +54,7 @@ const createPermissions = async () => {
         deleteUserPermission.save()
     }
 
-    adminUserPermission = await Permission.findOne({ name: 'adminUser' })
+    adminUserPermission = await Permission.findOne({ name: 'adminUser' }).exec()
     if (!adminUserPermission) {
         adminUserPermission = new Permission({
             name: 'adminUser',
@@ -59,7 +63,9 @@ const createPermissions = async () => {
         adminUserPermission.save()
     }
 
-    updateUserPermission = await Permission.findOne({ name: 'updateUser' })
+    updateUserPermission = await Permission.findOne({
+        name: 'updateUser',
+    }).exec()
     if (!updateUserPermission) {
         updateUserPermission = new Permission({
             name: 'updateUser',
@@ -68,7 +74,9 @@ const createPermissions = async () => {
         updateUserPermission.save()
     }
 
-    createUserPermission = await Permission.findOne({ name: 'createUser' })
+    createUserPermission = await Permission.findOne({
+        name: 'createUser',
+    }).exec()
     if (!createUserPermission) {
         createUserPermission = new Permission({
             name: 'createUser',
@@ -79,7 +87,7 @@ const createPermissions = async () => {
 
     deleteMessagePermission = await Permission.findOne({
         name: 'deleteMessage',
-    })
+    }).exec()
     if (!deleteMessagePermission) {
         deleteMessagePermission = new Permission({
             name: 'deleteMessage',
@@ -90,7 +98,7 @@ const createPermissions = async () => {
 
     updateMessagePermission = await Permission.findOne({
         name: 'updateMessage',
-    })
+    }).exec()
     if (!updateMessagePermission) {
         updateMessagePermission = new Permission({
             name: 'updateMessage',
@@ -101,7 +109,7 @@ const createPermissions = async () => {
 
     createMessagePermission = await Permission.findOne({
         name: 'createMessage',
-    })
+    }).exec()
     if (!createMessagePermission) {
         createMessagePermission = new Permission({
             name: 'createMessage',

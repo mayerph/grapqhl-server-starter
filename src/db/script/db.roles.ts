@@ -5,7 +5,7 @@ import { Permission } from '../../api/permission/permission.model'
  * drops all roles in the database.
  */
 const dropRoles = async () => {
-    await Role.deleteMany({})
+    await Role.deleteMany({}).exec()
 }
 
 /**
@@ -15,10 +15,10 @@ const createRoles = async () => {
     let adminRole
     let readerRole
 
-    adminRole = await Role.findOne({ name: 'ADMIN' })
+    adminRole = await Role.findOne({ name: 'ADMIN' }).exec()
 
     if (!adminRole) {
-        const permissions = await Permission.find({})
+        const permissions = await Permission.find({}).exec()
         adminRole = new Role({
             name: 'ADMIN',
             permissions,
@@ -26,10 +26,12 @@ const createRoles = async () => {
         adminRole.save()
     }
 
-    readerRole = await Role.findOne({ name: 'READER' })
+    readerRole = await Role.findOne({ name: 'READER' }).exec()
     if (!readerRole) {
         const permissionNames = ['readDefault']
-        const permissions = await Permission.find({ name: permissionNames })
+        const permissions = await Permission.find({
+            name: permissionNames,
+        }).exec()
 
         readerRole = new Role({
             name: 'READER',

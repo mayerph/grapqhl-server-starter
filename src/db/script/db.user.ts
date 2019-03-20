@@ -3,7 +3,7 @@ import { Role } from '../../api/role/role.model'
 
 // deletes all user in the database
 const dropUser = async () => {
-    await User.deleteMany({})
+    await User.deleteMany({}).exec()
 }
 
 // creates the default user in the database.
@@ -11,9 +11,9 @@ const createUser = async () => {
     let admin
     let reader
 
-    admin = await User.findOne({ username: 'admin' })
+    admin = await User.findOne({ username: 'admin' }).exec()
     if (!admin) {
-        const role = await Role.findOne({ name: 'ADMIN' })
+        const role = await Role.findOne({ name: 'ADMIN' }).exec()
         admin = new User({
             username: 'admin',
             password: 'sterne123',
@@ -23,10 +23,10 @@ const createUser = async () => {
         admin.save()
     }
 
-    reader = await User.findOne({ username: 'reader' })
+    reader = await User.findOne({ username: 'reader' }).exec()
 
     if (!reader) {
-        const role = await Role.findOne({ name: 'READER' })
+        const role = await Role.findOne({ name: 'READER' }).exec()
         reader = new User({
             username: 'reader',
             password: 'sterne123',

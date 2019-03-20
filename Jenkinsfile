@@ -9,7 +9,8 @@ pipeline {
                 }
             }   
             steps {
-                sh 'echo hello world'
+                sh 'npm install'
+                sh 'npm run lint'
             }
         }
         stage('Build') {
@@ -17,7 +18,6 @@ pipeline {
                 docker { image 'obraun/node-jenkins:latest' }
             }
             steps {
-                sh 'npm install'
                 sh 'npm run build-ts '
             }
         }

@@ -9,7 +9,7 @@ const CategoryController = {
      * returns all categories in the database.
      */
     categories: async () => {
-        const categories = await Category.find({})
+        const categories = await Category.find({}).exec()
         return categories
     },
 
@@ -18,7 +18,7 @@ const CategoryController = {
      * @param {string} id - id of the category
      */
     category: async (id: string) => {
-        const category = await Category.findById(id)
+        const category = await Category.findById(id).exec()
         return category
     },
 
@@ -43,7 +43,7 @@ const CategoryController = {
      * @param {string} id - id of the category
      */
     deleteCategory: async (id: string) => {
-        await Category.remove({ _id: id })
+        await Category.remove({ _id: id }).exec()
         return true
     },
 
@@ -54,7 +54,7 @@ const CategoryController = {
      * @param {string} description - description of the category
      */
     updateCategory: async (id: string, name: string, description: string) => {
-        const category = await Category.findById(id)
+        const category = await Category.findById(id).exec()
         if (name) {
             category.name = name
         }
@@ -70,7 +70,7 @@ const CategoryController = {
      * @param {string} id - id of the category
      */
     products: async (id: string) => {
-        const products = await Product.find({ categories: id })
+        const products = await Product.find({ categories: id }).exec()
         return products
     },
 }

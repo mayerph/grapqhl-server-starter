@@ -1,6 +1,10 @@
 import { UserController } from './user.controller'
 import { FileController } from '../file/file.controller'
 import { pubsub } from '../app'
+import { IUser } from './user.interface'
+import { IToken } from '../token/token.interface'
+import { IFile, FileUpload } from '../file/file.interface'
+import { IRole } from '../role/role.interface'
 
 // constant for all user events
 const EVENTS = {
@@ -8,6 +12,23 @@ const EVENTS = {
         CREATED: 'USER_CREATED',
         UPDATED: 'USER_UPDATED',
         DELETED: 'USER_DELETED',
+    },
+}
+
+// constant for all errors for the resolvers
+const ERRORS = {
+    CREDENTIALS: {
+        MISSING: new Error('Credentials are missing!'),
+    },
+    USER: {
+        OBJECT: new Error('User object is missing!'),
+        ID: {
+            MISSING: new Error('User`s id can`t be null'),
+        },
+    },
+    AUTH: {
+        NOUSER: new Error('Authentication failed'),
+        NOTOKEN: new Error('JWT information are missing!'),
     },
 }
 
@@ -20,21 +41,34 @@ const userResolver = {
         /**
          * returns all users in the database.
          */
-        users: async (parent, args, context) => {
+        users: async () => {
             const users = await UserController.users()
             return users
         },
         /**
          * returns specific user by id.
          */
-        user: async (parent, { id }, context) => {
+        user: async (parent: any, args: { id: string }): Promise<IUser> => {
+            const { id } = { ...args }
+            if (!id) {
+                throw ERRORS.USER.ID.MISSING
+            }
             const user = await UserController.user(id)
             return user
         },
         /**
          * returns the user-information of the requesting user
          */
-        me: async (parent, args, { auth: { me } }) => {
+        me: async (
+            parent: any,
+            args: any,
+            context: { auth: { me: IUser } }
+        ): Promise<IUser> => {
+            const { auth } = { ...context }
+            const { me } = { ...auth }
+            if (!me) {
+                throw ERRORS.AUTH.NOUSER
+            }
             const user = await UserController.user(me.id)
             return user
         },
@@ -44,7 +78,22 @@ const userResolver = {
         /**
          * processes a sign-up operation.
          */
-        signUp: async (parent, { username, email, password }, { token }) => {
+        signUp: async (
+            parent: any,
+            args: { username: string; email: string; password: string },
+            context: { token: { secret: string; expiresIn: string } }
+        ): Promise<IToken> => {
+            const { username, email, password } = {
+                ...args,
+            }
+            if (!username || !email || !password) {
+                throw ERRORS.CREDENTIALS.MISSING
+            }
+
+            const { token = null } = { ...context }
+            if (!token) {
+                throw ERRORS.AUTH.NOTOKEN
+            }
             const { userToken, user } = await UserController.signUp(
                 username,
                 email,
@@ -60,7 +109,20 @@ const userResolver = {
         /**
          * processes a sign-in operation.
          */
-        signIn: async (parent, { username, password }, { token }) => {
+        signIn: async (
+            parent: any,
+            args: { username: string; password: string },
+            context: { token: string }
+        ): Promise<IToken> => {
+            const { username, password } = { ...args }
+            if (!username || !password) {
+                throw ERRORS.CREDENTIALS.MISSING
+            }
+
+            const { token } = { ...context }
+            if (!token) {
+                throw ERRORS.AUTH.NOTOKEN
+            }
             const userToken = await UserController.signIn(
                 username,
                 password,
@@ -71,7 +133,14 @@ const userResolver = {
         /**
          * deletes a specific user by id.
          */
-        deleteUser: async (parent, { id }, context) => {
+        deleteUser: async (
+            parent: any,
+            args: { id: string }
+        ): Promise<boolean> => {
+            const { id } = { ...args }
+            if (!id) {
+                throw ERRORS.USER.ID.MISSING
+            }
             const successful = await UserController.deleteUser(id)
             // triggers the userDeleted event and subscription
             await pubsub.publish(EVENTS.USER.DELETED, {
@@ -83,10 +152,16 @@ const userResolver = {
          * creates a new user.
          */
         createUser: async (
-            parent,
-            { username, email, password, role, img },
-            context
-        ) => {
+            parent: any,
+            args: {
+                username: string
+                email: string
+                password: string
+                role: string
+                img?: FileUpload
+            }
+        ): Promise<IUser> => {
+            const { username, email, password, role, img } = { ...args }
             const user = await UserController.createUser(
                 username,
                 email,
@@ -105,10 +180,23 @@ const userResolver = {
          * updates an existing user.
          */
         updateUser: async (
-            parent,
-            { id, username, password, email, role, img, deleteImage },
-            context
-        ) => {
+            parent: any,
+            args: {
+                id: string
+                username?: string
+                password?: string
+                email?: string
+                role?: string
+                img?: FileUpload
+                deleteImage?: boolean
+            }
+        ): Promise<IUser> => {
+            const { id, username, password, email, role, img, deleteImage } = {
+                ...args,
+            }
+            if (!id) {
+                throw ERRORS.USER.ID.MISSING
+            }
             const user = await UserController.updateUser(
                 id,
                 username,
@@ -129,9 +217,30 @@ const userResolver = {
          */
         updateMe: async (
             parent,
-            { username, password, email, role, img, deleteImage },
-            { auth: { me } }
-        ) => {
+            args: {
+                username?: string
+                password?: string
+                email?: string
+                role?: string
+                img?: FileUpload
+                deleteImage?: boolean
+            },
+            context: {
+                auth: {
+                    me: IUser
+                }
+            }
+        ): Promise<IUser> => {
+            const { username, password, email, role, img, deleteImage } = {
+                ...args,
+            }
+            const { auth } = { ...context }
+            const { me } = { ...auth }
+
+            if (!me) {
+                throw ERRORS.AUTH.NOUSER
+            }
+
             const user = await UserController.updateUser(
                 me.id,
                 username,
@@ -172,13 +281,19 @@ const userResolver = {
         /**
          * returns the role of a user.
          */
-        role: async (user, args, { models }) => {
+        role: async (user: IUser): Promise<IRole> => {
+            if (!user) {
+                throw ERRORS.USER.OBJECT
+            }
             return UserController.userRole(user)
         },
         /**
          * returns the image of user.
          */
-        img: async (user, args, { models }) => {
+        img: async (user: IUser): Promise<IFile> => {
+            if (!user) {
+                throw ERRORS.USER.OBJECT
+            }
             return FileController.file(user.img)
         },
     },

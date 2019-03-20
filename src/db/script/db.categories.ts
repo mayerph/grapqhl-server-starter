@@ -4,7 +4,7 @@ import { Category } from '../../api/category/category.model'
  * drops all categories in the database.
  */
 const dropCategories = async () => {
-    await Category.deleteMany({})
+    await Category.deleteMany({}).exec()
 }
 
 /**
@@ -17,7 +17,7 @@ const createCategories = async () => {
     let equipmentCategory
     let accessoriesCategory
 
-    accessoriesCategory = await Category.findOne({ name: 'accessories' })
+    accessoriesCategory = await Category.findOne({ name: 'accessories' }).exec()
     if (!accessoriesCategory) {
         accessoriesCategory = new Category({
             name: 'accessories',
@@ -26,7 +26,7 @@ const createCategories = async () => {
         accessoriesCategory.save()
     }
 
-    equipmentCategory = await Category.findOne({ name: 'equipment' })
+    equipmentCategory = await Category.findOne({ name: 'equipment' }).exec()
     if (!equipmentCategory) {
         equipmentCategory = new Category({
             name: 'equipment',
@@ -35,7 +35,7 @@ const createCategories = async () => {
         equipmentCategory.save()
     }
 
-    wearCategory = await Category.findOne({ name: 'wear' })
+    wearCategory = await Category.findOne({ name: 'wear' }).exec()
     if (!wearCategory) {
         wearCategory = new Category({
             name: 'wear',
@@ -44,7 +44,7 @@ const createCategories = async () => {
         wearCategory.save()
     }
 
-    snowboardCategory = await Category.findOne({ name: 'snowboard' })
+    snowboardCategory = await Category.findOne({ name: 'snowboard' }).exec()
     if (!snowboardCategory) {
         snowboardCategory = new Category({
             name: 'snowboard',
@@ -53,7 +53,7 @@ const createCategories = async () => {
         snowboardCategory.save()
     }
 
-    skiCategory = await Category.findOne({ name: 'ski' })
+    skiCategory = await Category.findOne({ name: 'ski' }).exec()
     if (!skiCategory) {
         skiCategory = new Category({
             name: 'ski',
