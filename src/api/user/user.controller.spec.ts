@@ -34,9 +34,19 @@ describe('[UserController.users]', () => {
     ]
 
     it('db returns error', async () => {
+        const mockExec = {
+            exec: () => {
+                return Promise.reject(new Error(errorMessage))
+            },
+        }
+        const errorMessage = 'something went wrong'
+
         User.find = jest.fn(() => {
-            throw new Error('something went wrong')
+            return mockExec
         })
-        // await expect(UserController.users()).rejects.toThrow()
+
+        await expect(UserController.users()).rejects.toThrowError(
+            ERRORS.DB.USERS.QUERY
+        )
     })
 })

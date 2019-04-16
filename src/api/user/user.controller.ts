@@ -40,10 +40,14 @@ const UserController = {
      */
     users: async (): Promise<IUser[]> => {
         try {
-            const users = await User.find({}).exec()
+            const users = await User.find({})
+                .exec()
+                .catch(e => {
+                    throw ERRORS.DB.USERS.QUERY
+                })
             return users
         } catch (e) {
-            throw ERRORS.DB.USERS
+            throw e
         }
     },
     /**
